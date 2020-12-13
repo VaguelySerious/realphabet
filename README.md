@@ -4,10 +4,6 @@ Practice alphabets of different languages.
 
 I'm currently working on Japanse Hiragana/Katakana.
 
-## TODO
-
-### Japanese
-
 Japanese features in work:
 
 - Add options for Dakuten and Yoon characters
@@ -22,4 +18,7 @@ Planned alphabets:
 - Devanagari (Hindi)
 - Cyrillic (Russian)
 
-After that I'll do Korean Hangul and Hindi Devanagari.
+General features in work:
+
+- Play pronounciation audio for characters when reviewing them
+- Choice between light/dark mode
