@@ -16,36 +16,38 @@
     </div>
   </div>
   <div class="selector-option">
-    <label class="selector-option-label" for="Diacritics">
-      Include Dakuten (<a
-        href="https://en.wikipedia.org/wiki/Dakuten_and_handakuten"
-        class="help-link"
-        >What is this?</a
-      >)
-    </label>
-    <input
-      class="selector-option-input"
-      type="checkbox"
-      id="Diacritics"
-      name="Diacritics"
-      v-model="dakuten"
-    />
-  </div>
-  <div class="selector-option">
-    <label class="selector-option-label" for="Diacritics">
-      Include Yōon (<a
-        href="https://en.wikipedia.org/wiki/Y%C5%8Don"
-        class="help-link"
-        >What is this?</a
-      >)
-    </label>
-    <input
-      class="selector-option-input"
-      type="checkbox"
-      id="Diacritics"
-      name="Diacritics"
-      v-model="yoon"
-    />
+    <div class="selector-option-item">
+      <label class="selector-option-label" for="Diacritics">
+        Include Dakuten (<a
+          href="https://en.wikipedia.org/wiki/Dakuten_and_handakuten"
+          class="help-link"
+          >What is this?</a
+        >)
+      </label>
+      <input
+        class="selector-option-input"
+        type="checkbox"
+        id="Diacritics"
+        name="Diacritics"
+        v-model="dakuten"
+      />
+    </div>
+    <div class="selector-option-item">
+      <label class="selector-option-label" for="Diacritics">
+        Include Yōon (<a
+          href="https://en.wikipedia.org/wiki/Y%C5%8Don"
+          class="help-link"
+          >What is this?</a
+        >)
+      </label>
+      <input
+        class="selector-option-input"
+        type="checkbox"
+        id="Diacritics"
+        name="Diacritics"
+        v-model="yoon"
+      />
+    </div>
   </div>
   <button @click="done" type="button" class="button -primary">Go</button>
 </template>
@@ -110,6 +112,19 @@ export default {
     // align-items: center
     // justify-items: center
     overflow-y: scroll
+
+    @media (max-width: 800px)
+      overflow-y: auto
+      max-height: 100%
+      height: 100%
+
+  &-option
+    margin-top: 2rem
+
+    &-item
+      padding: 0.25rem
+
+    // &-input
 
 .row
   display: flex

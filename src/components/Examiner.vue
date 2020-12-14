@@ -5,7 +5,7 @@
     <p v-if="state === 'error'" class="exam-message error">Wrong!</p>
     <p v-if="state === 'success'" class="exam-message success">Nice!</p>
 
-    <div class="debug">
+    <div v-if="debug" class="debug">
       <div v-for="(stack, i) in pile">
         <hr class="hr" />
         <div class="debug-stack">
@@ -34,6 +34,7 @@ export default {
       state: '',
       pile,
       failed: 0,
+      debug: false,
     }
   },
   methods: {

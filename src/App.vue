@@ -73,6 +73,10 @@ html
   bottom: 0
   margin: 2rem
 
+  @media (max-width: 800px)
+    position: inherit
+    margin-top: 2rem
+
   & a
     text-decoration: none
     color: inherit
