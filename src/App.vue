@@ -1,8 +1,14 @@
 <template>
-  <div>
+  <div class="app">
+    <nav class="nav">
+      <span v-for="l in langs" class="nav-item" @click="lang = l.code">{{
+        l.name
+      }}</span>
+    </nav>
     <h1>RealPhabet</h1>
     <div v-if="isSelecting">
-      <Selector :items="items" @done="select" />
+      <Japanese v-if="lang === 'jp'" :items="items" @done="select" />
+      <Hindi v-if="lang === 'hi'" :items="items" @done="select" />
     </div>
     <div v-else>
       <button @click="isSelecting = true" class="button -back">Back</button>
@@ -23,19 +29,26 @@
 </template>
 
 <script>
-import Selector from './components/Selector.vue'
+import Japanese from './components/Japanese.vue'
+import Hindi from './components/Hindi.vue'
 import Examiner from './components/Examiner.vue'
 
 export default {
   name: 'App',
   components: {
-    Selector,
+    Japanese,
+    Hindi,
     Examiner,
   },
   data() {
     return {
       isSelecting: true,
       items: [],
+      lang: 'jp',
+      langs: [
+        { name: 'Japanese', code: 'jp' },
+        { name: 'Hindi', code: 'hi' },
+      ],
     }
   },
   methods: {
@@ -53,13 +66,24 @@ html
   background-color: #111
   font-size: 1.5em
 
-#app
+.app
   font-family: Avenir, Helvetica, Arial, sans-serif
   -webkit-font-smoothing: antialiased
   -moz-osx-font-smoothing: grayscale
   text-align: center
   // color: #2c3e50
-  margin-top: 60px
+
+.nav
+  display: flex
+  flex-wrap: wrap
+  justify-content: space-around
+
+  &-item
+    padding: 0.2rem
+
+    &:hover
+      background-color: gray
+      cursor: pointer
 
 .button
   margin-top: 1rem

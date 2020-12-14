@@ -65,10 +65,10 @@
 </template>
 
 <script>
-import { map, layout, dakuten, yoon, archaic } from '../characters'
+import { map, layout, dakuten, yoon, archaic } from '../characters/kana'
 
 export default {
-  name: 'Selector',
+  name: 'Japanese',
   emits: ['done'],
   // TODO Use these to preselect
   props: {
@@ -108,9 +108,7 @@ export default {
         : []
       const archaicList = this.archaic ? archaic : []
 
-      console.log({ yoonList, dakutenList, archaicList })
       chars = chars.concat(dakutenList, yoonList, archaicList)
-      console.log({ chars })
       this.$emit(
         'done',
         chars.map((char) => ({ char, roman: map[char] }))
