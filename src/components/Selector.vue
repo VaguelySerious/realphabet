@@ -1,7 +1,7 @@
 <template>
   <div class="selector-wrapper">
     <div class="selector">
-      <div v-for="(row, i) in layout">
+      <div class="selector-rows" v-for="(row, i) in layout">
         <div
           class="row hover"
           :class="{ selected: selectedRows[i] }"
@@ -17,7 +17,7 @@
   </div>
   <div class="selector-option">
     <div class="selector-option-item">
-      <label class="selector-option-label" for="Diacritics">
+      <label class="selector-option-label" for="dakuten">
         Include Dakuten (<a
           href="https://en.wikipedia.org/wiki/Dakuten_and_handakuten"
           class="help-link"
@@ -27,13 +27,13 @@
       <input
         class="selector-option-input"
         type="checkbox"
-        id="Diacritics"
-        name="Diacritics"
+        id="dakuten"
+        name="dakuten"
         v-model="dakuten"
       />
     </div>
     <div class="selector-option-item">
-      <label class="selector-option-label" for="Diacritics">
+      <label class="selector-option-label" for="yoon">
         Include Yōon (<a
           href="https://en.wikipedia.org/wiki/Y%C5%8Don"
           class="help-link"
@@ -43,9 +43,21 @@
       <input
         class="selector-option-input"
         type="checkbox"
-        id="Diacritics"
-        name="Diacritics"
+        id="yoon"
+        name="yoon"
         v-model="yoon"
+      />
+    </div>
+    <div class="selector-option-item">
+      <label class="selector-option-label" for="archaic">
+        Include Archaic Hiragana
+      </label>
+      <input
+        class="selector-option-input"
+        type="checkbox"
+        id="archaic"
+        name="archaic"
+        v-model="archaic"
       />
     </div>
   </div>
@@ -53,7 +65,7 @@
 </template>
 
 <script>
-import { map, layout, dakuten, yoon } from '../characters'
+import { map, layout, dakuten, yoon, archaic } from '../characters'
 
 export default {
   name: 'Selector',
@@ -66,7 +78,7 @@ export default {
     return {
       dakuten: false,
       yoon: false,
-      // TODO archaic: false,
+      archaic: false,
       selectedRows: {},
       map,
       layout,
@@ -77,19 +89,28 @@ export default {
       this.selectedRows[i] = !this.selectedRows[i]
     },
     done() {
-      const chars = this.layout
+      let chars = this.layout
         .filter((row, i) => this.selectedRows[i])
-        .reduce((arr, a) => arr.concat(a))
+        .flat()
         .filter((char) => char !== '')
 
       // Evaluate dakuten and yoon
-      if (this.dakuten) {
-        // TODO
-      }
-      if (this.yoon) {
-        // TODO
-      }
+      const dakutenList = this.dakuten
+        ? chars.map((char) => dakuten[char] || []).flat()
+        : []
+      const yoonList = this.yoon
+        ? Object.keys(yoon)
+            .map((key) => {
+              console.log(yoon[key].map((comp) => chars.includes(comp)))
+              return yoon[key].every((comp) => chars.includes(comp)) ? key : []
+            })
+            .flat()
+        : []
+      const archaicList = this.archaic ? archaic : []
 
+      console.log({ yoonList, dakutenList, archaicList })
+      chars = chars.concat(dakutenList, yoonList, archaicList)
+      console.log({ chars })
       this.$emit(
         'done',
         chars.map((char) => ({ char, roman: map[char] }))
@@ -126,10 +147,14 @@ export default {
 
     // &-input
 
+  &-rows
+    &:not(:last-child)
+      border-bottom: 1px solid grey
+
+
 .row
   display: flex
   margin-bottom: 0.1rem
-  border-bottom: 1px solid grey
 
   // &-list
 
