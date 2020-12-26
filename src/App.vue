@@ -1,110 +1,143 @@
 <template>
   <div class="app">
     <nav class="nav">
-      <span v-for="l in langs" class="nav-item" @click="lang = l.code">{{
-        l.name
-      }}</span>
+      <router-link class="nav-title title" :to="'/' + $route.params.lang">
+        RealPhabet
+      </router-link>
+      <div
+        v-if="$route.path !== '/'"
+        class="nav-item dropdown"
+        :class="{ 'is-active': dropdown }"
+        name="lang"
+        id="lang"
+      >
+        <div @click="dropdown = !dropdown" class="dropdown-trigger">
+          <span>{{ alphabets.find((a) => a.slug === lang).name }}</span>
+          <span class="icon is-small">
+            <i class="fas fa-angle-down" aria-hidden="true"></i>
+          </span>
+        </div>
+        <div class="dropdown-menu">
+          <div class="dropdown-content">
+            <a
+              href="#"
+              class="dropdown-item"
+              v-for="l in alphabets"
+              @click="navigate(l)"
+            >
+              {{ l.name }}
+            </a>
+          </div>
+        </div>
+      </div>
     </nav>
-    <h1>RealPhabet</h1>
-    <div v-if="isSelecting">
-      <Japanese v-if="lang === 'jp'" :items="items" @done="select" />
-      <Hindi v-if="lang === 'hi'" :items="items" @done="select" />
-    </div>
-    <div v-else>
-      <button @click="isSelecting = true" class="button -back">Back</button>
-      <Examiner :items="items" />
-    </div>
 
-    <footer class="footer">
-      <span> Inspired by <a href="https://realkana.com/">RealKana</a>. </span>
-      <span>
-        Made with love by <a href="https://wielander.me/">Peter Wielander</a>.
-      </span>
-      <span>
-        Open source on
-        <a href="https://github.com/VaguelySerious/realphabet">Github</a>.
-      </span>
-    </footer>
+    <div class="app-container">
+      <router-view />
+
+      <footer class="app-footer">
+        <span>
+          Made with love by <a href="https://wielander.me/">Peter Wielander</a>.
+        </span>
+        <span>
+          Inspired by <a href="https://realkana.com/">RealKana</a> and
+          <a href="https://www.tofugu.com/japanese/learn-hiragana/">Tofugu</a>.
+        </span>
+        <span>
+          Open source on
+          <a href="https://github.com/VaguelySerious/realphabet">Github</a>.
+        </span>
+      </footer>
+    </div>
   </div>
 </template>
 
 <script>
-import Japanese from './components/Japanese.vue'
-import Hindi from './components/Hindi.vue'
-import Examiner from './components/Examiner.vue'
+import { alphabets } from './data'
+import { save, load } from './util'
 
 export default {
   name: 'App',
-  components: {
-    Japanese,
-    Hindi,
-    Examiner,
-  },
   data() {
     return {
-      isSelecting: true,
-      items: [],
-      lang: 'jp',
-      langs: [
-        { name: 'Japanese', code: 'jp' },
-        { name: 'Hindi', code: 'hi' },
-      ],
+      alphabets,
+      lang: '',
+      dropdown: false,
     }
   },
+  mounted() {},
+  watch: {
+    $route(to) {
+      this.lang = to.params.lang
+      const lang = this.$route.params.lang
+      const level = load(lang, 'level')
+      const proficiency = load(lang, 'proficiency')
+      if (!level) {
+        save(lang, 'level', 0)
+      }
+      if (!proficiency) {
+        save(lang, 'proficiency', 1)
+      }
+    },
+  },
   methods: {
-    select(items) {
-      this.items = items
-      this.isSelecting = false
+    navigate(l) {
+      this.lang = l.slug
+      this.$router.push({ name: 'Home', params: { lang: l.slug } })
+      this.dropdown = false
     },
   },
 }
 </script>
 
 <style lang="sass">
+
+// Bulma variables
+$footer-background-color: white
+
+@import "../node_modules/bulma/bulma.sass"
+
 html
-  color: #eee
-  background-color: #111
-  font-size: 1.5em
+  background-image: url("/noise.png")
+  background-repeat: repeat
 
 .app
   font-family: Avenir, Helvetica, Arial, sans-serif
   -webkit-font-smoothing: antialiased
   -moz-osx-font-smoothing: grayscale
-  text-align: center
-  // color: #2c3e50
+
+  &-container
+    max-width: 800px
+    margin: 0 auto
 
 .nav
   display: flex
   flex-wrap: wrap
   justify-content: space-around
+  align-items: center
+  background-image: none
+  background-color: white
+  border-bottom: 1px solid black
+  margin-bottom: 2rem
+  padding: 0.5rem 0
+
+  &-title
+    margin-bottom: 0 !important
 
   &-item
     padding: 0.2rem
 
-    &:hover
-      background-color: gray
-      cursor: pointer
+    // &:hover
+    //   background-color: gray
+    //   cursor: pointer
 
-.button
-  margin-top: 1rem
-
-  &.-primary
-    font-size: inherit
-    margin: 2rem
-
-.footer
-  position: absolute
-  bottom: 0
-  margin: 2rem
-
-  @media (max-width: 800px)
-    position: inherit
-    margin-top: 2rem
-
+.app-footer
+  margin: 2rem 0
   & a
     text-decoration: none
     color: inherit
     border-bottom: 2px solid gray
     &:hover
-      border-bottom: 2px solid white
+      border-bottom: 2px solid black
+      color: black
 </style>
