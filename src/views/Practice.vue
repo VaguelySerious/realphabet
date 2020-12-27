@@ -1,14 +1,29 @@
 <template>
   <div class="practice">
-    <p class="practice-char">{{ items[current].char }}</p>
+    <div class="practice-char">{{ items[current].char }}</div>
     <input
+      ref="input"
       v-model="textInput"
       @input="check"
-      class="practice-input"
+      class="input practice-input"
       type="text"
+      placeholder="Your input"
+      :disabled="state === 'failed'"
+      :class="{
+        'is-success': state === 'success',
+        'is-danger': state === 'wrong',
+      }"
     />
-    <p v-if="state === 'error'" class="practice-message error">Wrong!</p>
-    <p v-if="state === 'success'" class="practice-message success">Nice!</p>
+    <div class="practice-messages">
+      <p v-if="state === 'wrong'" class="practice-message error">Wrong!</p>
+      <p v-if="state === 'success'" class="practice-message success">Nice!</p>
+      <p v-if="state === 'failed'" class="practice-message error">
+        It's "{{ items[current].roman }}"
+      </p>
+      <!-- <p v-if="state === 'failed'" class="practice-message">
+        Press enter or tap the input to continue
+      </p> -->
+    </div>
 
     <div v-if="debug" class="debug">
       <div v-for="(stack, i) in pile">
@@ -84,21 +99,19 @@ export default {
 
       // End condition
       if (this.pile[this.pile.length - 1].length === this.items.length) {
-        // TODO Finish message / modal
         const mode = this.$route.query.mode
         const lang = this.$route.params.lang
         const query = { state: 'practiced' }
-        if (mode === 'test' || mode === 'practice') {
-          // Finishing a round increases your level
-          if (mode === 'test') {
-            query.state = 'levelup'
-            save(lang, 'level', +load(lang, 'level') + 1)
-            const newProf = +load(lang, 'proficiency') + 1
-            save(lang, 'proficiency', newProf >= 5 ? 5 : newProf)
-          }
-          return this.$router.push({ name: 'Home', query })
+        if (mode === 'test') {
+          // Levelup
+          save(lang, 'level', +load(lang, 'level') + 1)
+          query.state = 'levelup'
+        } else if (mode === 'practice') {
+          // Proficiency up
+          const newProf = +load(lang, 'proficiency') + 1
+          save(lang, 'proficiency', newProf >= 5 ? 5 : newProf)
         }
-        alert('Finished one round!')
+        this.$router.push({ name: 'Home', query })
       }
 
       // Then get next one on pile
@@ -131,9 +144,18 @@ export default {
           this.getNext(failed)
         } else if (this.textInput.length >= maxLength) {
           this.failed++
-          this.state = 'error'
+          this.state = 'wrong'
           if (this.failed >= 3) {
             // TODO Show correct one and move on
+            this.state = 'failed'
+            setTimeout(() => {
+              this.state = 'blank'
+              this.getNext(true)
+              this.textInput = ''
+              setTimeout(() => {
+                this.$refs.input.focus()
+              }, 100)
+            }, 1500)
           }
         }
       } else {
@@ -148,15 +170,20 @@ export default {
 .practice
 
   &-char
-    font-size: 3em
+    text-align: center
+    font-size: 5rem
+
+  &-messages
+    text-align: center
 
   &-message
     font-size: 2em
 
   &-input
-    width: 100px
-    height: 50px
-    font-size: 2em
+    // width: 100px
+    // height: 50px
+    text-align: center
+    font-size: 1.5em
 
     &:focus
       outline: none

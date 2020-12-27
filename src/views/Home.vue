@@ -1,8 +1,10 @@
 <template>
   <div class="home">
-    <h1 class="home-title">Learn {{ language.name }}</h1>
+    <div class="home-text">
+      <h1 class="home-title">Learn {{ language.name }}</h1>
 
-    <div class="home-desc" v-html="language.desc"></div>
+      <div class="home-desc" v-html="language.desc"></div>
+    </div>
 
     <div v-if="state" class="notification success">
       {{
@@ -37,8 +39,6 @@
           <div class="home-card-left-title">Practice</div>
           <div class="home-card-left-description">
             Reinforce what you learned in the lessons.
-            <!-- Reinforce what you learned in the lessons. We recommend getting your
-            practice level to 5/5 before your start learning new material. -->
           </div>
         </div>
         <div class="home-card-right">
@@ -48,7 +48,7 @@
       </div>
     </div>
 
-    <div class="home-card-wrapper">
+    <!-- div class="home-card-wrapper">
       <router-link :to="{ name: 'Read' }" class="home-card card">
         <div class="home-card-left">
           <div class="home-card-left-title">Reading</div>
@@ -61,7 +61,7 @@
           <div class="home-card-right-num">0/min</div>
         </div>
       </router-link>
-    </div>
+    </div> -->
 
     <div class="home-card-wrapper">
       <router-link :to="{ name: 'Select' }" class="home-card card">
@@ -139,6 +139,11 @@ export default {
 <style lang="sass">
 .home
 
+  &-text
+    @media (max-width: 800px)
+      margin-left: 1rem
+      margin-right: 1rem
+
   &-title
     font-size: 2rem
 
@@ -148,7 +153,7 @@ export default {
   &-card
     padding: 1rem 2rem
     max-width: 800px
-    background-color: #a72
+    background-color: white
     margin: 0 auto
     cursor: pointer
     display: flex

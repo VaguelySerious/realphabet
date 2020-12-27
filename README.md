@@ -1,30 +1,21 @@
 # RealPhabet
 
-Practice alphabets of different languages.
+Learn to read alphabets of different languages by using mnemonics and practicing them chunk by chunk.
 
-I'm currently working on Japanse Hiragana/Katakana.
+Supported alphabets:
 
-Japanese features in work:
+- [x] Hiragana (Japanese) - ひらがな (日本語)
+- [x] Devanagari (Hindi) - हिन्दी (देवनागरी)
+- [ ] Katakana (Japanese) - カタカナ (日本語)
+- [ ] Hangul (Korean) - 한글 (한국어)
+- [ ] Cyrillic (Russian) - Кириллица (русский)
 
-- [x] Add options for Dakuten and Yoon characters
-- [x] Add option for archaic symbols
-- [ ] Add Katakana
+Features in work:
 
-Hindi features in work:
-
-- [ ] Inital version
-- [ ] Add option for combinations
-
-Planned alphabets:
-
-- [ ] Hangul (Korean)
-- [ ] Cyrillic (Russian)
-
-General features in work:
-
-- [ ] Maintain selected characters after coming back from practice
-- [ ] Display hint or right answer after too many mistakes
-- [ ] Add option for whole words and sentences for practice
-- [ ] Store settings in local storage
+- [x] Maintain selected characters after coming back from practice
+- [x] Store settings in local storage
+- [x] Display right answer after too many mistakes
+- [ ] Learn using mnemonics and show them as help after making too many mistakes
 - [ ] Play pronounciation audio for characters when reviewing them
-- [ ] Choice between light/dark mode
+- [ ] Show stroke order diagrams and animations for characters
+- [ ] Add option for whole words and sentences for practice

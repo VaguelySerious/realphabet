@@ -6,13 +6,13 @@
       </router-link>
       <div
         v-if="$route.path !== '/'"
-        class="nav-item dropdown"
+        class="nav-item dropdown is-right"
         :class="{ 'is-active': dropdown }"
         name="lang"
         id="lang"
       >
         <div @click="dropdown = !dropdown" class="dropdown-trigger">
-          <span>{{ alphabets.find((a) => a.slug === lang).name }}</span>
+          <span>{{ alphabets.find((a) => a.slug === lang).shortName }}</span>
           <span class="icon is-small">
             <i class="fas fa-angle-down" aria-hidden="true"></i>
           </span>
@@ -34,10 +34,16 @@
 
     <div class="app-container">
       <router-view />
+    </div>
 
-      <footer class="app-footer">
+    <footer class="app-footer">
+      <div class="app-footer-content">
+        <!-- <span>
+          <a href="https://wielander.me/posts/learning-alphabets">About</a>.
+        </span> -->
         <span>
-          Made with love by <a href="https://wielander.me/">Peter Wielander</a>.
+          Made with love by
+          <a href="https://wielander.me/">Peter Wielander</a>.
         </span>
         <span>
           Inspired by <a href="https://realkana.com/">RealKana</a> and
@@ -47,8 +53,8 @@
           Open source on
           <a href="https://github.com/VaguelySerious/realphabet">Github</a>.
         </span>
-      </footer>
-    </div>
+      </div>
+    </footer>
   </div>
 </template>
 
@@ -102,6 +108,7 @@ html
   background-repeat: repeat
 
 .app
+  position: relative
   font-family: Avenir, Helvetica, Arial, sans-serif
   -webkit-font-smoothing: antialiased
   -moz-osx-font-smoothing: grayscale
@@ -113,7 +120,7 @@ html
 .nav
   display: flex
   flex-wrap: wrap
-  justify-content: space-around
+  justify-content: space-between
   align-items: center
   background-image: none
   background-color: white
@@ -122,9 +129,11 @@ html
   padding: 0.5rem 0
 
   &-title
+    margin-left: 3rem
     margin-bottom: 0 !important
 
   &-item
+    margin-right: 3rem
     padding: 0.2rem
 
     // &:hover
@@ -132,7 +141,16 @@ html
     //   cursor: pointer
 
 .app-footer
-  margin: 2rem 0
+  margin-top: 2rem
+  height: 200px
+  max-width: 800px
+
+  &-content
+    margin: 2rem
+    padding-bottom: 2rem
+    position: absolute
+    bottom: 0
+
   & a
     text-decoration: none
     color: inherit
