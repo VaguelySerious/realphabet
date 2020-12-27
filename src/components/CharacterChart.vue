@@ -1,15 +1,17 @@
 <template>
-  <div class="chart">
-    <div class="chart-row-wrapper" v-for="(row, i) in layout">
-      <div
-        class="chart-row hover"
-        :class="{ selected: selected[i] }"
-        @click="$emit('selectRow', i)"
-      >
-        <span class="chart-item" v-for="char in row">
-          {{ char }}
-          <span class="chart-item-rom">{{ map[char] }}</span>
-        </span>
+  <div class="chart-wrapper">
+    <div class="chart">
+      <div class="chart-row-wrapper" v-for="(row, i) in layout">
+        <div
+          class="chart-row"
+          :class="{ selected: selected[i] }"
+          @click="$emit('selectRow', i)"
+        >
+          <span class="chart-item" v-for="char in row">
+            <span class="chart-item-char">{{ char }}</span>
+            <span class="chart-item-rom">{{ map[char] }}</span>
+          </span>
+        </div>
       </div>
     </div>
   </div>
@@ -41,12 +43,17 @@ export default {
 </script>
 
 <style lang="sass">
+@import "../style"
+
 .chart
-  width: 100%
   display: flex
   overflow-x: auto
   overflow-y: hidden
-  font-size: 1.75em
+  font-size: 2.5rem
+
+  &-wrapper
+    display: flex
+    justify-content: center
 
   @media (max-width: 800px)
     overflow-y: auto
@@ -66,26 +73,27 @@ export default {
         border-right: 1px solid grey
 
     display: flex
-    height: 100%
     flex-direction: column
-    justify-content: space-between
-    margin-bottom: 0.1rem
+    align-items: center
+
+    &:hover
+      background-color: darken($color-bg, 5%)
+      cursor: pointer
+
+    &.selected
+      background-color: darken($color-bg, 10%) !important
 
   &-item
-    padding: 0 1rem
+    padding: 0.25rem 1rem
+    margin: 0
     display: flex
     width: 20%
     flex-direction: column
     align-items: center
 
+    &-char
+      text-align: center
+
     &-rom
       font-size: 0.5em
-
-.hover
-  &:hover
-    background-color: #eee
-    cursor: pointer
-
-.selected
-  background-color: #888 !important
 </style>

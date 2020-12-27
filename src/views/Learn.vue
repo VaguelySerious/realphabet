@@ -53,7 +53,7 @@
 
       <div class="learn-show">
         <div v-for="character in group" class="learn-show-item">
-          <div class="learn-show-item-char">
+          <div class="learn-show-item-char" @click="play(character)">
             {{ character }}
           </div>
           {{ map[character] }}
@@ -111,6 +111,16 @@ export default {
     },
   },
   methods: {
+    play(character) {
+      // TODO Play audio?
+      // const AudioContext = window.AudioContext || window.webkitAudioContext
+      // const audioContext = new AudioContext()
+      // const sound = new Audio(character + '.mp3')
+      // const sound = new Audio(
+      //   'https://static.memrise.com/uploads/things/audio/35707925_1406860036353.mp3'
+      // )
+      // sound.play()
+    },
     startTest() {
       // TODO options
       // const options = this.options.filter((o) => o.value).map((o) => o.id)
@@ -176,6 +186,13 @@ export default {
       margin: 0.2rem
       border: 1px solid gray
       background-color: white
+      // cursor: pointer
+
+      &:hover
+        // background-color: lightgray
+
+      &.-active
+        background-color: gray
 
       &-char
         white-space: nowrap

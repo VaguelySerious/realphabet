@@ -424,7 +424,7 @@ When a vowel is combined, it changes its appearance. This means you will need
 to re-learn every vowel from scratch (*sad trombone sounds*). The default vowel is "अ" ("a"),
 so every consonant is automatically paired with "a" unless otherwise noted. We will look
 at the consonant "क" ("k") to see how these pairs are constructed.`,
-          characters: hindiVowels.map((v) => 'क' + v[0]),
+          characters: [[''], ...hindiVowels].map((v) => 'क' + v[0]),
           groups: [0, 1, 2, 3],
         },
         {

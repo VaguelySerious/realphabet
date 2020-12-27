@@ -97,15 +97,7 @@ export default {
 </script>
 
 <style lang="sass">
-
-// Bulma variables
-$footer-background-color: white
-
-@import "../node_modules/bulma/bulma.sass"
-
-html
-  background-image: url("/noise.png")
-  background-repeat: repeat
+@import "./style"
 
 .app
   position: relative

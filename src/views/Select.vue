@@ -22,7 +22,12 @@
         />
       </div>
     </div>
-    <button @click="done" type="button" class="button -primary">
+    <button
+      :disabled="hasSelected"
+      @click="done"
+      type="button"
+      class="button -primary"
+    >
       Practice
     </button>
     <button @click="all" type="button" class="button -primary">
@@ -48,6 +53,11 @@ export default {
       options,
       map,
     }
+  },
+  computed: {
+    hasSelected() {
+      return Object.values(this.selectedRows).every((r) => !r)
+    },
   },
   methods: {
     selectRow(i) {
@@ -100,6 +110,7 @@ export default {
 
     &-item
       padding: 0.25rem
+
 
     // &-input
 </style>
