@@ -66,19 +66,25 @@
     <div class="home-card-wrapper">
       <router-link :to="{ name: 'Select' }" class="home-card card">
         <div class="home-card-left">
-          <div class="home-card-left-title">Custom</div>
+          <div class="home-card-left-title">Overview</div>
           <div class="home-card-left-description">
-            Select what you want to focus on.
+            View all characters and start custom practice sessions.
           </div>
         </div>
         <div class="home-card-right"></div>
       </router-link>
     </div>
+
+    <p>FAQ</p>
+    <p>How does this work?</p>
+    <p>Why is this the best way to learn Japanese Hiragana?</p>
+    <p>What are Japanese Hiragana?</p>
+    <p>Why would you want to learn Japanese Hiragana?</p>
   </div>
 </template>
 
 <script>
-import { characters, alphabets } from '../data'
+import { data, alphabets } from '../data/index'
 import { save, load } from '../util'
 
 export default {
@@ -89,9 +95,8 @@ export default {
     return {
       level: load(lang, 'level') || 0,
       proficiency: load(lang, 'proficiency') || 1,
-      alphabet: characters[lang],
       state: this.$route.query.state,
-      maxLevel: characters[lang].info.levels.length,
+      maxLevel: data[lang].levels.length,
     }
   },
   watch: {
@@ -99,8 +104,7 @@ export default {
       const { lang } = r.params
       this.level = load(lang, 'level') || 0
       this.proficiency = load(lang, 'proficiency') || 1
-      this.alphabet = characters[lang]
-      this.maxLevel = characters[lang].info.levels.length
+      this.maxLevel = data[lang].levels.length
     },
   },
   computed: {
@@ -119,7 +123,7 @@ export default {
       // const options = this.options.filter((o) => o.value).map((o) => o.id)
       const options = []
       const groups = []
-      for (let i = 0; i < this.level + 1; i++) {
+      for (let i = 0; i < this.level; i++) {
         groups.push(i)
       }
       this.$router.push({

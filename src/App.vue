@@ -59,7 +59,7 @@
 </template>
 
 <script>
-import { alphabets } from './data'
+import { alphabets } from './data/index'
 import { save, load } from './util'
 
 export default {
@@ -71,7 +71,6 @@ export default {
       dropdown: false,
     }
   },
-  mounted() {},
   watch: {
     $route(to) {
       this.lang = to.params.lang
@@ -100,6 +99,7 @@ export default {
 @import "./style"
 
 .app
+  min-height: 100vh
   position: relative
   font-family: Avenir, Helvetica, Arial, sans-serif
   -webkit-font-smoothing: antialiased
@@ -133,8 +133,7 @@ export default {
     //   cursor: pointer
 
 .app-footer
-  margin-top: 2rem
-  height: 200px
+  height: 150px
   max-width: 800px
 
   &-content

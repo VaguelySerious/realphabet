@@ -38,7 +38,7 @@
 
 <script>
 import CharacterChart from '../components/CharacterChart.vue'
-import { characters } from '../data'
+import { data } from '../data/index'
 import { save, load } from '../util'
 
 export default {
@@ -46,7 +46,7 @@ export default {
   name: 'Select',
   data() {
     const { lang } = this.$route.params
-    const { map, layout, options = [] } = characters[lang]
+    const { map, layout, options = [] } = data[lang]
     return {
       selectedRows: load(lang, 'selectedRows') || { 0: true },
       layout,

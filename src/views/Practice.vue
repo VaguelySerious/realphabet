@@ -38,8 +38,8 @@
 </template>
 
 <script>
-import { shuffle, save, load } from '../util'
-import { characters } from '../data'
+import { shuffle, save, load, play } from '../util'
+import { data } from '../data/index'
 
 export default {
   name: 'Practice',
@@ -47,7 +47,7 @@ export default {
     const practiceLength = this.$route.query.mode === 'test' ? 4 : 3
     const { opt = '', grp = '' } = this.$route.query
     const { lang } = this.$route.params
-    const items = characters[lang].parse(
+    const items = data[lang].parse(
       grp
         .split(',')
         .filter((x) => x !== '')
@@ -69,6 +69,11 @@ export default {
     }
   },
   methods: {
+    play() {
+      const lang = this.$route.params.lang
+      const char = this.items[this.current].roman
+      play(lang, char)
+    },
     getNext(failedCurrent = false) {
       const current = this.items[this.current]
       // Find current in pile
@@ -132,6 +137,7 @@ export default {
           this.textInput === current.roman ||
           (hasMultiple && current.roman.includes(this.textInput))
         ) {
+          this.play()
           this.state = 'success'
           setTimeout(() => {
             if (this.state === 'success') {

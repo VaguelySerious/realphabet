@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { alphabets } from '../data'
+import { alphabets } from '../data/index'
 
 export default {
   name: 'Start',

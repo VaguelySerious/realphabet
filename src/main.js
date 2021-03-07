@@ -2,7 +2,7 @@ import { createApp } from 'vue'
 import { createWebHistory, createRouter } from 'vue-router'
 
 import App from './App.vue'
-import { alphabets } from './data'
+import { alphabets } from './data/index'
 
 import Start from './views/Start.vue'
 import Home from './views/Home.vue'

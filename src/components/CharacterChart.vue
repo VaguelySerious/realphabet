@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import { characters } from '../data'
+import { data } from '../data/index'
 
 export default {
   name: 'CharacterChart',
@@ -33,10 +33,10 @@ export default {
   },
   computed: {
     layout() {
-      return characters[this.lang].layout
+      return data[this.lang].layout
     },
     map() {
-      return characters[this.lang].map
+      return data[this.lang].map
     },
   },
 }
