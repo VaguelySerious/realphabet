@@ -1,8 +1,13 @@
 export const layout = [
-  ['अ', 'आ', 'ओं', 'ऑ'],
-  ['औ', 'अं', 'अः', 'ॲं'],
+  ['अ', 'अं', 'अः', 'ॲं'],
+  ['औ', 'आ', 'ओं', 'ऑ'],
   ['इ', 'ई', 'उ', 'ऊ'],
   ['ए', 'ऍ', 'ऐ', 'ऋ'],
+  ['क', 'न', 'य', 'म'],
+  ['ह', 'ल', 'र', 'व'],
+  ['ब', 'श', 'ट', 'त'],
+  ['द', 'ध', 'प', 'फ'],
+  ['फ़', 'च', 'छ', 'ज'],
 ]
 
 export const options = [
@@ -16,7 +21,5 @@ export const options = [
 
 export function parse(groups, options) {
   const chars = layout.filter((row, i) => groups.includes(i)).flat()
-  return chars
-    .filter((char) => char !== '')
-    .map((char) => ({ char, roman: this.map[char] }))
+  return chars.filter((char) => char !== '')
 }

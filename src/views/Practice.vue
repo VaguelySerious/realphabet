@@ -1,28 +1,28 @@
 <template>
   <div class="practice">
-    <div class="practice-char">{{ items[current].char }}</div>
+    <div class="practice-char">{{ queue[0] }}</div>
     <input
       ref="input"
       v-model="textInput"
-      @input="check"
+      @keydown.enter="check"
       class="input practice-input"
       type="text"
       placeholder="Your input"
-      :disabled="state === 'failed'"
       :class="{
         'is-success': state === 'success',
         'is-danger': state === 'wrong',
       }"
     />
+    <!-- :disabled="state === 'failed'" -->
     <div class="practice-messages">
       <p v-if="state === 'wrong'" class="practice-message error">Wrong!</p>
       <p v-if="state === 'success'" class="practice-message success">Nice!</p>
       <p v-if="state === 'failed'" class="practice-message error">
-        It's "{{ items[current].roman }}"
+        <CharacterCard :lang="$route.params.lang" :char="queue[0]" />
       </p>
-      <!-- <p v-if="state === 'failed'" class="practice-message">
+      <p v-if="state === 'failed'" class="practice-message">
         Press enter or tap the input to continue
-      </p> -->
+      </p>
     </div>
 
     <div v-if="debug" class="debug">
@@ -40,70 +40,81 @@
 <script>
 import { shuffle, save, load, play } from '../util'
 import { data } from '../data/index'
+import CharacterCard from '../components/CharacterCard.vue'
+
+// All characters from the last levels
+function accumulatedLevelChars(lang, level, lastLevelOnly) {
+  const levels = data[lang].levels
+  if (lastLevelOnly) {
+    return levels[level].characters
+  }
+  return levels
+    .slice(0, level + 1)
+    .reduce((acc, a) => acc.concat(a.reviewCharacters || a.characters), [])
+}
 
 export default {
   name: 'Practice',
+  components: {
+    CharacterCard,
+  },
   data() {
-    const practiceLength = this.$route.query.mode === 'test' ? 4 : 3
-    const { opt = '', grp = '' } = this.$route.query
+    const { opt = '', grp = '', level, mode } = this.$route.query
     const { lang } = this.$route.params
-    const items = data[lang].parse(
-      grp
-        .split(',')
-        .filter((x) => x !== '')
-        .map(Number),
-      opt.split(',').filter((x) => x !== '')
-    )
-    const pile = [
-      shuffle(items.slice()),
-      ...[...Array(practiceLength - 1).keys()].map((x) => []),
-    ]
+    const selectedGroups = grp
+      .split(',')
+      .filter((x) => x !== '')
+      .map(Number)
+    const selectedOptions = opt.split(',').filter((x) => x !== '')
+
+    const items = level
+      ? accumulatedLevelChars(lang, +level, mode === 'test')
+      : data[lang].parse(selectedGroups, selectedOptions)
+    const queue = shuffle(items.slice())
+    const stats = queue.reduce((acc, a) => {
+      acc[a] = { correct: 0, failed: 0 }
+      return acc
+    }, {})
+    console.log('Items', queue)
     return {
-      items,
       textInput: '',
-      current: items.indexOf(pile[0][0]),
       state: '',
-      pile,
+      queue,
+      stats,
       failed: 0,
       debug: load('', 'debug'),
     }
   },
+  computed: {
+    map() {
+      return data[this.$route.params.lang].map
+    },
+  },
   methods: {
     play() {
       const lang = this.$route.params.lang
-      const char = this.items[this.current].roman
+      const char = this.map[this.queue[0]].rom
       play(lang, char)
     },
-    getNext(failedCurrent = false) {
-      const current = this.items[this.current]
-      // Find current in pile
-      let stack = 0
-      let card = 0
-      for (stack; stack < this.pile.length; stack++) {
-        card = 0
-        for (card; card < this.pile[stack].length; card++) {
-          if (this.pile[stack][card] === this.items[this.current]) {
-            break
-          }
-        }
-        if (this.pile[stack][card] === this.items[this.current]) {
-          break
-        }
-      }
-      if (stack === this.pile.length) {
-        throw new Error(`Could not find ${this.items[this.current]}`)
+    nextItem(failedCurrent = false) {
+      const curr = this.queue.shift()
+      const next = this.queue[0]
+      const stats = this.stats[curr]
+      // Update stats
+      if (failedCurrent) {
+        stats.failed += 1
+      } else {
+        stats.correct += 1
       }
 
-      // If failed, knock one down, otherwise raise
-      const removed = this.pile[stack].splice(card, 1)
-      if (failedCurrent) {
-        this.pile[(stack || 1) - 1].push(removed[0])
-      } else {
-        this.pile[stack + 1].push(removed[0])
+      // Pile item on the end again if not reviewed enough
+      const REVIEW_LEVEL = 2
+      if (stats.correct <= stats.failed + REVIEW_LEVEL) {
+        this.queue.push(curr)
       }
 
       // End condition
-      if (this.pile[this.pile.length - 1].length === this.items.length) {
+      if (!next) {
         const mode = this.$route.query.mode
         const lang = this.$route.params.lang
         const query = { state: 'practiced' }
@@ -118,54 +129,41 @@ export default {
         }
         this.$router.push({ name: 'Home', query })
       }
-
-      // Then get next one on pile
-      const nextCard = this.pile.find((stack) => stack[0])[0]
-      this.current = this.items.findIndex((item) => item === nextCard)
     },
     check() {
-      const current = this.items[this.current]
-      const hasMultiple = Array.isArray(current.roman)
-      const maxLength = !hasMultiple
-        ? current.roman.length
-        : current.roman.reduce((acc, a) => (a.length > acc ? a.length : acc), 0)
-      const minLength = !hasMultiple
-        ? current.roman.length
-        : current.roman.reduce((acc, a) => (a.length < acc ? a.length : acc), 9)
-      if (this.textInput.length >= minLength) {
-        if (
-          this.textInput === current.roman ||
-          (hasMultiple && current.roman.includes(this.textInput))
-        ) {
-          this.play()
-          this.state = 'success'
-          setTimeout(() => {
-            if (this.state === 'success') {
-              this.state = 'blank'
-            }
-          }, 1000)
-          this.textInput = ''
-          const failed = this.failed
-          this.failed = 0
-          this.getNext(failed)
-        } else if (this.textInput.length >= maxLength) {
-          this.failed++
-          this.state = 'wrong'
-          if (this.failed >= 3) {
-            // TODO Show correct one and move on
-            this.state = 'failed'
-            setTimeout(() => {
-              this.state = 'blank'
-              this.getNext(true)
-              this.textInput = ''
-              setTimeout(() => {
-                this.$refs.input.focus()
-              }, 100)
-            }, 1500)
-          }
-        }
-      } else {
+      const current = this.map[this.queue[0]]
+
+      if (this.state === 'failed') {
+        this.nextItem(true)
         this.state = 'blank'
+        this.textInput = ''
+        return
+      }
+
+      const setTempState = (state) => {
+        this.state = state
+        setTimeout(() => {
+          if (this.state === state) {
+            this.state = 'blank'
+          }
+        }, 1000)
+      }
+
+      if (this.textInput === current.input) {
+        this.play()
+        setTempState('success')
+        this.textInput = ''
+        this.nextItem(false)
+        this.failed = 0
+      } else {
+        this.failed++
+        if (this.failed >= 3) {
+          this.state = 'failed'
+          this.failed = 0
+          this.play()
+        } else {
+          setTempState('wrong')
+        }
       }
     },
   },
@@ -186,8 +184,6 @@ export default {
     font-size: 2em
 
   &-input
-    // width: 100px
-    // height: 50px
     text-align: center
     font-size: 1.5em
 

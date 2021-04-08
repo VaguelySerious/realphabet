@@ -114,5 +114,4 @@ export function parse(groups, options) {
   return chars
     .filter((char) => char !== '')
     .concat(dakutenList, yoonList, archaicList)
-    .map((char) => ({ char, roman: this.map[char] }))
 }

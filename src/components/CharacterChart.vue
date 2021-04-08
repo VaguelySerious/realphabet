@@ -2,14 +2,23 @@
   <div class="chart-wrapper">
     <div class="chart">
       <div class="chart-row-wrapper" v-for="(row, i) in layout">
-        <div
-          class="chart-row"
-          :class="{ selected: selected[i] }"
-          @click="$emit('selectRow', i)"
-        >
-          <span class="chart-item" v-for="char in row">
+        <div class="chart-row" :class="{ selected: selected[i] }">
+          <input
+            type="checkbox"
+            :id="'row' + i"
+            :name="'row' + i"
+            @click="$emit('selectRow', i)"
+            :checked="selected[i]"
+          />
+          <span
+            class="chart-item"
+            v-for="char in row"
+            @click="play(map[char].rom)"
+          >
             <span class="chart-item-char">{{ char }}</span>
-            <span class="chart-item-rom">{{ map[char] }}</span>
+            <span v-if="map[char]" class="chart-item-rom">{{
+              map[char].rom
+            }}</span>
           </span>
         </div>
       </div>
@@ -19,6 +28,7 @@
 
 <script>
 import { data } from '../data/index'
+import { play } from '../util'
 
 export default {
   name: 'CharacterChart',
@@ -39,6 +49,12 @@ export default {
       return data[this.lang].map
     },
   },
+  methods: {
+    play(rom) {
+      const lang = this.$route.params.lang
+      play(lang, rom)
+    },
+  },
 }
 </script>
 
@@ -46,7 +62,8 @@ export default {
 @import "../style"
 
 .chart
-  display: flex
+  // display: flex
+  // flex-wrap: wrap
   overflow-x: auto
   overflow-y: hidden
   font-size: 2.5rem
@@ -73,12 +90,7 @@ export default {
         border-right: 1px solid grey
 
     display: flex
-    flex-direction: column
     align-items: center
-
-    &:hover
-      background-color: darken($color-bg, 5%)
-      cursor: pointer
 
     &.selected
       background-color: darken($color-bg, 10%) !important
@@ -90,6 +102,10 @@ export default {
     width: 20%
     flex-direction: column
     align-items: center
+
+    &:hover
+      background-color: darken($color-bg, 5%)
+      cursor: pointer
 
     &-char
       text-align: center

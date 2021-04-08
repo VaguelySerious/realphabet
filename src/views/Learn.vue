@@ -60,17 +60,19 @@
       </div>
     </div>
 
-    <div v-if="level === currentLevel">
-      <button @click="startTest" type="button" class="button -primary">
-        Take the test
-      </button>
-    </div>
-    <div v-else>
-      <router-link :to="{ params: { level: currentLevel } }">
-        <button type="button" class="button -primary">
-          Jump to current level
+    <div class="learn-next">
+      <div v-if="level === currentLevel">
+        <button @click="startTest" type="button" class="button -primary">
+          Take the test
         </button>
-      </router-link>
+      </div>
+      <div v-else>
+        <router-link :to="{ params: { level: currentLevel } }">
+          <button type="button" class="button -primary">
+            Jump to current level
+          </button>
+        </router-link>
+      </div>
     </div>
   </div>
 </template>
@@ -99,34 +101,24 @@ export default {
   },
   computed: {
     group() {
-      const { level } = this.$route.params
+      const level = this.level
       if (level >= this.levels.length) {
         return []
       }
       return this.levels[level].characters
     },
     level() {
-      const { level } = this.$route.params
-      return +level
+      return +this.$route.params.level
     },
   },
   methods: {
     startTest() {
-      // TODO options
-      // const options = this.options.filter((o) => o.value).map((o) => o.id)
-      const options = []
-
-      const groups = []
-      for (let i = 0; i < this.level + 1; i++) {
-        groups.push(i)
-      }
       this.$router.push({
         name: 'Practice',
         params: { lang: this.$route.params.lang },
         query: {
           mode: 'test',
-          opt: options.join(','),
-          grp: groups.join(','),
+          level: this.level,
         },
       })
     },
@@ -159,8 +151,8 @@ export default {
         background-color: lightgreen
 
       &.-disabled
-        color: gray
-        background-color: darkgray
+        color: lightgray
+        // background-color: darkgray
 
   &-content
     margin-top: 2rem
@@ -173,4 +165,8 @@ export default {
 
   &-notification
     margin: 2rem 0
+
+  &-next
+    display: flex
+    justify-content: center
 </style>

@@ -1,5 +1,3 @@
-import { zipCombine } from '../util'
-
 const chars = {
   あ: {
     input: 'a',
@@ -32,10 +30,8 @@ const chars = {
     mem: `
         Can you see the letter "<span class="ccard-highlight">o</span>" in here,
         two times? This one looks similar to あ, except for its one key
-        difference: there are two letter "o" symbols visible in there. Make sure
-        you use this to differentiate this kana (お) and that similar kana (あ).
-        This is one area of hiragana where a lot of people trip up, but by using
-        this mnemonic you will be able to figure them out every time.`,
+        difference: there are two "o" symbols being formed in there. Make sure
+        you use this to differentiate this kana (お) and that similar kana (あ).`,
   },
   か: {
     input: 'ka',
@@ -362,13 +358,13 @@ const chars = {
     mem: '',
   },
   ぢ: {
-    input: ['ji', 'di', 'dji'],
+    input: 'dji',
     rom: 'dji',
     ipa: '',
     mem: '',
   },
   づ: {
-    input: ['zu', 'du', 'dsu'],
+    input: 'dsu',
     rom: 'dsu',
     ipa: '',
     mem: '',
@@ -453,7 +449,31 @@ const chars = {
   },
 }
 
+function zipCombine(a, b) {
+  const originalVowels = {
+    ゃ: 'や',
+    ゅ: 'ゆ',
+    ょ: 'よ',
+  }
+  // For every consonants
+  return a.reduce((acc, consonant) => {
+    const c = chars[consonant]
+    // Combine with all vowels
+    for (const vowel of b) {
+      const newChar = consonant + vowel
+      const v = chars[originalVowels[vowel]]
+      acc[newChar] = {
+        input: c.input.slice(0, -1) + v.input,
+        rom: c.input.slice(0, -1) + v.input,
+        ipa: c.ipa + v.ipa,
+        mem: `This is just a combination of ${consonant} and ${originalVowels[vowel]}, which you learned individually. The ${vowel} is written slightly smaller here, indicating that is combines with the previous character.`,
+      }
+    }
+    return acc
+  }, {})
+}
+
 export default {
-  ...chars,
   ...zipCombine('ひびぴしじちぢきぎりみに'.split(''), 'ゃゅょ'.split('')),
+  ...chars,
 }

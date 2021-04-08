@@ -34,7 +34,11 @@
     </div>
 
     <div class="home-card-wrapper">
-      <div @click="startPractice" class="home-card card">
+      <div
+        @click="startPractice"
+        class="home-card card"
+        :class="{ '-disabled': level === 0 }"
+      >
         <div class="home-card-left">
           <div class="home-card-left-title">Practice</div>
           <div class="home-card-left-description">
@@ -75,11 +79,11 @@
       </router-link>
     </div>
 
-    <p>FAQ</p>
+    <!-- <p>FAQ</p>
     <p>How does this work?</p>
     <p>Why is this the best way to learn Japanese Hiragana?</p>
     <p>What are Japanese Hiragana?</p>
-    <p>Why would you want to learn Japanese Hiragana?</p>
+    <p>Why would you want to learn Japanese Hiragana?</p> -->
   </div>
 </template>
 
@@ -119,20 +123,15 @@ export default {
   },
   methods: {
     startPractice() {
-      // TODO options, see Learn.vue
-      // const options = this.options.filter((o) => o.value).map((o) => o.id)
-      const options = []
-      const groups = []
-      for (let i = 0; i < this.level; i++) {
-        groups.push(i)
+      if (this.level === 0) {
+        return
       }
       this.$router.push({
         name: 'Practice',
         params: { lang: this.$route.params.lang },
         query: {
           mode: 'practice',
-          opt: options.join(','),
-          grp: groups.join(','),
+          level: this.level,
         },
       })
     },
@@ -157,18 +156,23 @@ export default {
   &-card
     padding: 1rem 2rem
     max-width: 800px
-    background-color: white
     margin: 0 auto
     cursor: pointer
     display: flex
     color: black
     justify-content: space-between
 
+    &.-disabled
+      color: gray
+      background-color: lightgray !important
+      cursor: default
+
     &-wrapper
       margin-bottom: 2rem
       // display: flex
       // width: 100%
       // justify-content: space-around
+
 
     &-left
       margin-right: 2rem

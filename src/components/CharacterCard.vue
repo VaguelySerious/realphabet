@@ -4,84 +4,50 @@
       <div class="ccard-show-char">
         {{ char }}
       </div>
-      <div class="ccard-show-actions">
-        <Action type="audio" @click="play" />
-        <Action type="draw" />
+      <div class="ccard-highlight-wrapper">
+        <span class="ccard-highlight">"{{ info.rom }}"</span>
       </div>
     </div>
 
     <div class="ccard-explain">
-      <div class="ccard-explain-top">
-        <div v-if="info.mem" v-html="info.mem"></div>
-        <div v-else>
-          We don't have a mnemonic for this character currently. Try to make up
-          a story around why the character could look it does, and why it sounds
-          like it sounds. The crazier the story, the better you'll remember it.
-        </div>
-      </div>
-      <div class="ccard-explain-bot">
-        <div class="ccard-explain-bot-ipa">
-          <span class="ccard-highlight">{{ info.rom }}</span>
-          <!-- like in "original" -->
-        </div>
-        <div class="ccard-explain-bot-notes">
-          <Action type="warning" />
-          <Action type="danger" />
-        </div>
-      </div>
+      <div v-if="info.mem" v-html="info.mem"></div>
     </div>
   </div>
 </template>
 
 <style lang="sass">
 .ccard
-  background-color: white
+  background-color: #eee
   cursor: pointer
-  width: 100%
   display: flex
   padding: 1rem 1rem
-  margin: 1rem 0
+  margin: 1rem 0.5rem
   border-radius: 10px
+  max-width: 47%
 
   &-highlight
-    //
-    color: blue
+    &-wrapper
+      width: 100%
+      text-align: center
     font-size: 1.25em
 
   &-show
-    flex: 1 1 auto
-    display: flex
+    margin-right: 2rem
     &-char
-      font-size: 10rem
-      max-height:200px
+      width: 80px
+      font-size: 5rem
       align-items: center
       justify-content: center
       text-align: center
-    &-actions
-      display: flex
-      flex-direction: column
 
   &-explain
-    flex: 2 2 auto
-    display: flex
-    flex-direction: column
-    justify-content: space-between
-    &-top
-      font-size: 1.5rem
-    &-bot
-      display: flex
-      justify-content: space-between
-      align-items: end
-      &-ipa
-        //
-      &-notes
-        display: flex
-        flex-wrap: nowrap
+    // flex: 2 2 auto
+    // max-width: 300px
 </style>
 
 <script>
 import { data } from '../data/index'
-import { save, load, play } from '../util'
+import { play } from '../util'
 import Action from './Action.vue'
 
 export default {
