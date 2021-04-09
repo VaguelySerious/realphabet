@@ -17,7 +17,7 @@
     <div class="practice-messages">
       <p v-if="state === 'wrong'" class="practice-message error">Wrong!</p>
       <p v-if="state === 'success'" class="practice-message success">Nice!</p>
-      <p v-if="state === 'failed'" class="practice-message error">
+      <p v-if="state === 'failed'" class="practice-card">
         <CharacterCard :lang="$route.params.lang" :char="queue[0]" />
       </p>
       <p v-if="state === 'failed'" class="practice-message">
@@ -181,7 +181,12 @@ export default {
     text-align: center
 
   &-message
-    font-size: 2em
+    margin-top: 0.5rem
+    font-size: 2rem
+
+  &-card
+    display: flex
+    justify-content: center
 
   &-input
     text-align: center

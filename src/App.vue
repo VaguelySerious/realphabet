@@ -1,60 +1,61 @@
 <template>
   <div class="app">
-    <nav class="nav">
-      <router-link class="nav-title title" :to="'/' + $route.params.lang">
-        RealPhabet
-      </router-link>
-      <div
-        v-if="$route.path !== '/'"
-        class="nav-item dropdown is-right"
-        :class="{ 'is-active': dropdown }"
-        name="lang"
-        id="lang"
-      >
-        <div @click="dropdown = !dropdown" class="dropdown-trigger">
-          <span>{{ alphabets.find((a) => a.slug === lang).shortName }}</span>
-          <span class="icon is-small">
-            <i class="fas fa-angle-down" aria-hidden="true"></i>
-          </span>
-        </div>
-        <div class="dropdown-menu">
-          <div class="dropdown-content">
-            <a
-              href="#"
-              class="dropdown-item"
-              v-for="l in alphabets"
-              @click="navigate(l)"
-            >
-              {{ l.name }}
-            </a>
+    <div class="app-container">
+      <nav class="nav">
+        <router-link class="nav-title title" :to="'/' + $route.params.lang">
+          RealPhabet
+        </router-link>
+        <div
+          v-if="$route.path !== '/'"
+          class="nav-item dropdown is-right"
+          :class="{ 'is-active': dropdown }"
+          name="lang"
+          id="lang"
+        >
+          <div @click="dropdown = !dropdown" class="dropdown-trigger">
+            <span>{{ alphabets.find((a) => a.slug === lang).shortName }}</span>
+            <span class="icon is-small">
+              <i class="fas fa-angle-down" aria-hidden="true"></i>
+            </span>
+          </div>
+          <div class="dropdown-menu">
+            <div class="dropdown-content">
+              <a
+                href="#"
+                class="dropdown-item"
+                v-for="l in alphabets"
+                @click="navigate(l)"
+              >
+                {{ l.name }}
+              </a>
+            </div>
           </div>
         </div>
-      </div>
-    </nav>
+      </nav>
 
-    <div class="app-container">
       <router-view />
-    </div>
 
-    <footer class="app-footer">
-      <div class="app-footer-content">
-        <!-- <span>
+      <footer class="app-footer">
+        <div class="app-footer-content">
+          <!-- <span>
           <a href="https://wielander.me/posts/learning-alphabets">About</a>.
         </span> -->
-        <span>
-          Made with love by
-          <a href="https://wielander.me/">Peter Wielander</a>.
-        </span>
-        <span>
-          Inspired by <a href="https://realkana.com/">RealKana</a> and
-          <a href="https://www.tofugu.com/japanese/learn-hiragana/">Tofugu</a>.
-        </span>
-        <span>
-          Open source on
-          <a href="https://github.com/VaguelySerious/realphabet">Github</a>.
-        </span>
-      </div>
-    </footer>
+          <span>
+            Made with love by
+            <a href="https://wielander.me/">Peter Wielander</a>.
+          </span>
+          <span>
+            Inspired by <a href="https://realkana.com/">RealKana</a> and
+            <a href="https://www.tofugu.com/japanese/learn-hiragana/">Tofugu</a
+            >.
+          </span>
+          <span>
+            Open source on
+            <a href="https://github.com/VaguelySerious/realphabet">Github</a>.
+          </span>
+        </div>
+      </footer>
+    </div>
   </div>
 </template>
 
@@ -101,6 +102,7 @@ export default {
 .app
   min-height: 100vh
   position: relative
+  display: flex
   font-family: Avenir, Helvetica, Arial, sans-serif
   -webkit-font-smoothing: antialiased
   -moz-osx-font-smoothing: grayscale
@@ -108,6 +110,7 @@ export default {
   &-container
     max-width: 800px
     margin: 0 auto
+    width: 100%
 
 .nav
   display: flex

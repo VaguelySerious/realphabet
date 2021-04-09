@@ -6,6 +6,9 @@ import devanagariCharacters from './devanagari/characters'
 import devanagariLevels from './devanagari/levels'
 import * as devanagariStructure from './devanagari/structure'
 
+// Hindi sounds from "Learning Hindi" (https://drive.google.com/drive/folders/0B-Du37mNuyYLX2dTMW5Bd0hWQVE)
+// Hiragana sounds from ???
+
 export const data = {
   hiragana: {
     map: hiraganaCharacters,
@@ -43,7 +46,7 @@ It is a phonetic lettering system consisting of 46 primary characters
     slug: 'devanagari',
     lang: 'hindi',
     desc: `Devanagari (देवनागरी),
-is an alphasyllabary composed of 47 primary characters (14 vowels, 33 consonants) and is the
+is an alphasyllabary composed of 44 primary characters (11 vowels, 33 consonants) and is the
 fourth most widely adopted writing system in the world,
 being used for over 120 languages and by roughly 1.7 billion native speakers.
 `,

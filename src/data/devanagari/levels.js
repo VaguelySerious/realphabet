@@ -2,7 +2,7 @@ import characters, { hindiVowels } from './characters'
 
 export default [
   {
-    info: `Devanagari consists of ~16 vowels and ~33 consonants.
+    info: `Devanagari consists of ~11 vowels and ~33 consonants.
 We will start out learning all the vowels. The first lesson contains four vowels
 that are very easy to confuse. All of them look like a "3" attached to a pillar,
 and make sounds that are close to "a", so make sure to focus on the differences

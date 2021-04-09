@@ -25,6 +25,9 @@
   border-radius: 10px
   max-width: 47%
 
+  @media (max-width: 1000px)
+    max-width: 100%
+
   &-highlight
     &-wrapper
       width: 100%
@@ -34,11 +37,12 @@
   &-show
     margin-right: 2rem
     &-char
-      width: 80px
       font-size: 5rem
       align-items: center
       justify-content: center
       text-align: center
+      @media (max-width: 1000px)
+        max-width: 100%
 
   &-explain
     // flex: 2 2 auto
@@ -73,7 +77,7 @@ export default {
   methods: {
     play() {
       const lang = this.$route.params.lang
-      play(lang, this.romanization)
+      play(lang, this.char)
     },
   },
 }

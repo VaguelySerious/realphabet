@@ -152,7 +152,7 @@ export default {
 
       &.-disabled
         color: lightgray
-        // background-color: darkgray
+        cursor: default
 
   &-content
     margin-top: 2rem

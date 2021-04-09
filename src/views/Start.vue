@@ -37,5 +37,10 @@ export default {
 </script>
 
 <style lang="sass">
-// .start
+.start
+  &-title
+    h1
+      font-size: 3rem
+    h2
+      font-size: 2rem
 </style>

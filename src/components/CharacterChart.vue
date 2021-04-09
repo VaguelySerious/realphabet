@@ -10,11 +10,7 @@
             @click="$emit('selectRow', i)"
             :checked="selected[i]"
           />
-          <span
-            class="chart-item"
-            v-for="char in row"
-            @click="play(map[char].rom)"
-          >
+          <span class="chart-item" v-for="char in row" @click="play(char)">
             <span class="chart-item-char">{{ char }}</span>
             <span v-if="map[char]" class="chart-item-rom">{{
               map[char].rom
@@ -50,9 +46,9 @@ export default {
     },
   },
   methods: {
-    play(rom) {
+    play(char) {
       const lang = this.$route.params.lang
-      play(lang, rom)
+      play(lang, char)
     },
   },
 }
@@ -85,10 +81,6 @@ export default {
 
 
   &-row
-    &-wrapper
-      &:not(:last-child)
-        border-right: 1px solid grey
-
     display: flex
     align-items: center
 
