@@ -2,14 +2,19 @@
   <div class="chart-wrapper">
     <div class="chart">
       <div class="chart-row-wrapper" v-for="(row, i) in layout">
-        <div
-          class="chart-row"
-          :class="{ selected: selected[i] }"
-          @click="$emit('selectRow', i)"
-        >
-          <span class="chart-item" v-for="char in row">
+        <div class="chart-row" :class="{ selected: selected[i] }">
+          <input
+            type="checkbox"
+            :id="'row' + i"
+            :name="'row' + i"
+            @click="$emit('selectRow', i)"
+            :checked="selected[i]"
+          />
+          <span class="chart-item" v-for="char in row" @click="play(char)">
             <span class="chart-item-char">{{ char }}</span>
-            <span class="chart-item-rom">{{ map[char] }}</span>
+            <span v-if="map[char]" class="chart-item-rom">{{
+              map[char].rom
+            }}</span>
           </span>
         </div>
       </div>
@@ -18,7 +23,8 @@
 </template>
 
 <script>
-import { characters } from '../data'
+import { data } from '../data/index'
+import { play } from '../util'
 
 export default {
   name: 'CharacterChart',
@@ -33,10 +39,16 @@ export default {
   },
   computed: {
     layout() {
-      return characters[this.lang].layout
+      return data[this.lang].layout
     },
     map() {
-      return characters[this.lang].map
+      return data[this.lang].map
+    },
+  },
+  methods: {
+    play(char) {
+      const lang = this.$route.params.lang
+      play(lang, char)
     },
   },
 }
@@ -46,7 +58,8 @@ export default {
 @import "../style"
 
 .chart
-  display: flex
+  // display: flex
+  // flex-wrap: wrap
   overflow-x: auto
   overflow-y: hidden
   font-size: 2.5rem
@@ -68,17 +81,8 @@ export default {
 
 
   &-row
-    &-wrapper
-      &:not(:last-child)
-        border-right: 1px solid grey
-
     display: flex
-    flex-direction: column
     align-items: center
-
-    &:hover
-      background-color: darken($color-bg, 5%)
-      cursor: pointer
 
     &.selected
       background-color: darken($color-bg, 10%) !important
@@ -90,6 +94,10 @@ export default {
     width: 20%
     flex-direction: column
     align-items: center
+
+    &:hover
+      background-color: darken($color-bg, 5%)
+      cursor: pointer
 
     &-char
       text-align: center

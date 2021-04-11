@@ -40,3 +40,7 @@ export function load(lang, key) {
     return item
   }
 }
+export function play(lang, char) {
+  const sound = new Audio(`/sounds/${lang}/${char}.mp3`)
+  sound.play()
+}

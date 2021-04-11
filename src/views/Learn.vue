@@ -52,41 +52,44 @@
       </div>
 
       <div class="learn-show">
-        <div v-for="character in group" class="learn-show-item">
-          <div class="learn-show-item-char" @click="play(character)">
-            {{ character }}
-          </div>
-          {{ map[character] }}
-          {{ mnemonics[character] }}
-        </div>
+        <CharacterCard
+          v-for="character in group"
+          :lang="$route.params.lang"
+          :char="character"
+        />
       </div>
     </div>
 
-    <div v-if="level === currentLevel">
-      <button @click="startTest" type="button" class="button -primary">
-        Take the test
-      </button>
-    </div>
-    <div v-else>
-      <router-link :to="{ params: { level: currentLevel } }">
-        <button type="button" class="button -primary">
-          Jump to current level
+    <div class="learn-next">
+      <div v-if="level === currentLevel">
+        <button @click="startTest" type="button" class="button -primary">
+          Take the test
         </button>
-      </router-link>
+      </div>
+      <div v-else>
+        <router-link :to="{ params: { level: currentLevel } }">
+          <button type="button" class="button -primary">
+            Jump to current level
+          </button>
+        </router-link>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import { characters } from '../data'
+import { data } from '../data/index'
 import { save, load } from '../util'
+import CharacterCard from '../components/CharacterCard.vue'
 
 export default {
   name: 'Learn',
+  components: {
+    CharacterCard,
+  },
   data() {
     const { lang } = this.$route.params
-    const { map, layout, info = {} } = characters[lang]
-    const { levels = [], mnemonics = {} } = info
+    const { map, layout, levels = [] } = data[lang]
     const currentLevel = +load(lang, 'level') || 0
     console.log({ currentLevel })
     return {
@@ -94,49 +97,28 @@ export default {
       layout,
       map,
       levels,
-      mnemonics,
     }
   },
   computed: {
     group() {
-      const { level } = this.$route.params
+      const level = this.level
       if (level >= this.levels.length) {
         return []
       }
       return this.levels[level].characters
     },
     level() {
-      const { level } = this.$route.params
-      return +level
+      return +this.$route.params.level
     },
   },
   methods: {
-    play(character) {
-      // TODO Play audio?
-      // const AudioContext = window.AudioContext || window.webkitAudioContext
-      // const audioContext = new AudioContext()
-      // const sound = new Audio(character + '.mp3')
-      // const sound = new Audio(
-      //   'https://static.memrise.com/uploads/things/audio/35707925_1406860036353.mp3'
-      // )
-      // sound.play()
-    },
     startTest() {
-      // TODO options
-      // const options = this.options.filter((o) => o.value).map((o) => o.id)
-      const options = []
-
-      const groups = []
-      for (let i = 0; i < this.level + 1; i++) {
-        groups.push(i)
-      }
       this.$router.push({
         name: 'Practice',
         params: { lang: this.$route.params.lang },
         query: {
           mode: 'test',
-          opt: options.join(','),
-          grp: groups.join(','),
+          level: this.level,
         },
       })
     },
@@ -169,8 +151,8 @@ export default {
         background-color: lightgreen
 
       &.-disabled
-        color: gray
-        background-color: darkgray
+        color: lightgray
+        cursor: default
 
   &-content
     margin-top: 2rem
@@ -181,24 +163,10 @@ export default {
     justify-content: center
     flex-wrap: wrap
 
-    &-item
-      padding: 0.2rem 0.4rem
-      margin: 0.2rem
-      border: 1px solid gray
-      background-color: white
-      // cursor: pointer
-
-      &:hover
-        // background-color: lightgray
-
-      &.-active
-        background-color: gray
-
-      &-char
-        white-space: nowrap
-        font-size: 4rem
-        width: 120px
-
   &-notification
     margin: 2rem 0
+
+  &-next
+    display: flex
+    justify-content: center
 </style>

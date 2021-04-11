@@ -277,65 +277,77 @@ export const characters = {
       ['ん', '', '', '', ''],
     ],
 
-    info: {
-      levels: [
-        {
-          info:
-            'We introduce character in pairs of five. Help messages and mnemonics for these sections are still under development, but you can still go through each level in turn and test yourself on the characters. If you are learning Hiragana for the first time, make sure to invent a little story for each character (i.e. a mnemonic) to help you remember its pronounciation.',
-          // "We'll be learning the vowels first. There are 5 vowels in the Japanese language, just like in English. Unlike English, however, every vowel only makes one distinct sound. The Japanese 'a' sound, for example, is always pronounced the same, whereas in English, the 'a' can make different sounds, like in 'all' and 'any'.",
-          characters: ['あ', 'い', 'う', 'え', 'お'],
-          groups: [0],
-        },
-        {
-          characters: ['か', 'き', 'く', 'け', 'こ'],
-          groups: [1],
-        },
-        {
-          characters: ['さ', 'し', 'す', 'せ', 'そ'],
-          groups: [2],
-        },
-        {
-          characters: ['た', 'ち', 'つ', 'て', 'と'],
-          groups: [3],
-        },
-        {
-          characters: ['な', 'に', 'ぬ', 'ね', 'の'],
-          groups: [4],
-        },
-        {
-          characters: ['は', 'ひ', 'ふ', 'へ', 'ほ'],
-          groups: [5],
-        },
-        {
-          characters: ['ま', 'み', 'む', 'め', 'も'],
-          groups: [6],
-        },
-        {
-          characters: ['ら', 'り', 'る', 'れ', 'ろ'],
-          groups: [8],
-        },
-        {
-          characters: ['や', 'ゆ', 'よ'],
-          groups: [7],
-        },
-        {
-          characters: ['わ', 'を', 'ん'],
-          groups: [9, 10],
-        },
-        {
-          characters: 'がぎぐげござじずぜぞばびぶべぼぱぴぷぺぽ'.split(''),
-          groups: [1, 2, 3, 5], // all that have dakuten
-          options: ['dakuten'],
-        },
-        {
-          // info: 'The last lesson will be on learning yoon (combinations)',
-          characters: ['きゃ', 'きゅ', 'きょ'],
-          groups: [1, 2, 3, 4, 5, 6, 7, 8],
-          options: ['dakuten', 'yoon'],
-        },
-      ],
-      mnemonics: {},
-    },
+    levels: [
+      {
+        info:
+          'We introduce character in pairs of five. Help messages and mnemonics for these sections are still under development, but you can still go through each level in turn and test yourself on the characters. If you are learning Hiragana for the first time, make sure to invent a little story for each character (i.e. a mnemonic) to help you remember its pronounciation.',
+        // "We'll be learning the vowels first. There are 5 vowels in the Japanese language, just like in English. Unlike English, however, every vowel only makes one distinct sound. The Japanese 'a' sound, for example, is always pronounced the same, whereas in English, the 'a' can make different sounds, like in 'all' and 'any'.",
+        characters: ['あ', 'い', 'う', 'え', 'お'],
+        groups: [0],
+      },
+      {
+        characters: ['か', 'き', 'く', 'け', 'こ'],
+        groups: [1],
+      },
+      {
+        characters: ['さ', 'し', 'す', 'せ', 'そ'],
+        groups: [2],
+      },
+      {
+        characters: ['た', 'ち', 'つ', 'て', 'と'],
+        groups: [3],
+      },
+      {
+        characters: ['な', 'に', 'ぬ', 'ね', 'の'],
+        groups: [4],
+      },
+      {
+        characters: ['は', 'ひ', 'ふ', 'へ', 'ほ'],
+        groups: [5],
+      },
+      {
+        characters: ['ま', 'み', 'む', 'め', 'も'],
+        groups: [6],
+      },
+      {
+        characters: ['ら', 'り', 'る', 'れ', 'ろ'],
+        groups: [8],
+      },
+      {
+        characters: ['や', 'ゆ', 'よ'],
+        groups: [7],
+      },
+      {
+        characters: ['わ', 'を', 'ん'],
+        groups: [9, 10],
+      },
+      {
+        characters: 'がぎぐげご'.split(''),
+        groups: [1], // all that have dakuten
+        options: ['dakuten'],
+      },
+      {
+        characters: 'ざじずぜぞ'.split(''),
+        groups: [2], // all that have dakuten
+        options: ['dakuten'],
+      },
+      {
+        characters: 'だぢづでど'.split(''),
+        groups: [3], // all that have dakuten
+        options: ['dakuten'],
+      },
+      {
+        characters: 'ばびぶべぼぱぴぷぺぽ'.split(''),
+        groups: [5], // all that have dakuten
+        options: ['dakuten'],
+      },
+      {
+        // info: 'The last lesson will be on learning yoon (combinations)',
+        characters: ['きゃ', 'きゅ', 'きょ'],
+        groups: [1, 2, 3, 4, 5, 6, 7, 8],
+        options: ['dakuten', 'yoon'],
+      },
+    ],
 
     parse: function (groups, options) {
       const chars = this.layout.filter((row, i) => groups.includes(i)).flat()
@@ -357,6 +369,7 @@ export const characters = {
         .concat(dakutenList, yoonList, archaicList)
         .map((char) => ({ char, roman: this.map[char] }))
     },
+    mnemonics: [],
   },
   devanagari: {
     map: {
@@ -387,55 +400,53 @@ export const characters = {
       ['इ', 'ई', 'उ', 'ऊ'],
       ['ए', 'ऍ', 'ऐ', 'ऋ'],
     ],
-    info: {
-      levels: [
-        {
-          info: `Devanagari consists of ~16 vowels and ~33 consonants.
+    mnemonics: {},
+    levels: [
+      {
+        info: `Devanagari consists of ~16 vowels and ~33 consonants.
 As usual, we will start out with vowels. The first lesson contains four vowels
 that are very easy to confuse. All of them look like a "3" attached to a pillar,
 and make sounds that are close to "a", so make sure to focus on the differences
 between them when learning.`,
-          characters: ['अ', 'अं', 'अः', 'ॲं'],
-          groups: [0],
-        },
-        {
-          info: `The next four vowels are also quite similar to the previous ones,
+        characters: ['अ', 'अं', 'अः', 'ॲं'],
+        groups: [0],
+      },
+      {
+        info: `The next four vowels are also quite similar to the previous ones,
 in that they all start with what looks like a "3", and two pillars at the end,
 and they make sounds that are somewhere between "a" and "o".`,
-          characters: ['औ', 'आ', 'ओं', 'ऑ'],
-          groups: [0, 1],
-        },
-        {
-          info: `The next vowels all look very different, and make different sounds to
+        characters: ['औ', 'आ', 'ओं', 'ऑ'],
+        groups: [0, 1],
+      },
+      {
+        info: `The next vowels all look very different, and make different sounds to
 the ones we learned previously. We arranged them in pairs by similarity. Again, make sure to
 focus on the differen between them.`,
-          characters: ['इ', 'ई', 'उ', 'ऊ'],
-          groups: [0, 1, 2],
-        },
-        {
-          info: `This is the final set of vowels.`,
-          characters: ['ए', 'ऍ', 'ऐ', 'ऋ'],
-          groups: [0, 1, 2, 3],
-        },
-        {
-          info: `Good job on learning all the vowels. Finally, we can look at the
+        characters: ['इ', 'ई', 'उ', 'ऊ'],
+        groups: [0, 1, 2],
+      },
+      {
+        info: `This is the final set of vowels.`,
+        characters: ['ए', 'ऍ', 'ऐ', 'ऋ'],
+        groups: [0, 1, 2, 3],
+      },
+      {
+        info: `Good job on learning all the vowels. Finally, we can look at the
 first consonant. In Devanagari, all consonants are used together with a vowel to form a pair.
 When a vowel is combined, it changes its appearance. This means you will need
 to re-learn every vowel from scratch (*sad trombone sounds*). The default vowel is "अ" ("a"),
 so every consonant is automatically paired with "a" unless otherwise noted. We will look
 at the consonant "क" ("k") to see how these pairs are constructed.`,
-          characters: [[''], ...hindiVowels].map((v) => 'क' + v[0]),
-          groups: [0, 1, 2, 3],
-        },
-        {
-          info: `This level is still under construction. There will likely be around
+        characters: [[''], ...hindiVowels].map((v) => 'क' + v[0]),
+        groups: [0, 1, 2, 3],
+      },
+      {
+        info: `This level is still under construction. There will likely be around
 20 levels soon. In the meantime, we recommend practicing with other resources.`,
-          characters: [],
-          groups: [],
-        },
-      ],
-      mnemonics: {},
-    },
+        characters: [],
+        groups: [],
+      },
+    ],
     options: [
       {
         id: 'combinations',

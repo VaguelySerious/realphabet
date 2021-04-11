@@ -34,7 +34,11 @@
     </div>
 
     <div class="home-card-wrapper">
-      <div @click="startPractice" class="home-card card">
+      <div
+        @click="startPractice"
+        class="home-card card"
+        :class="{ '-disabled': level === 0 }"
+      >
         <div class="home-card-left">
           <div class="home-card-left-title">Practice</div>
           <div class="home-card-left-description">
@@ -66,19 +70,25 @@
     <div class="home-card-wrapper">
       <router-link :to="{ name: 'Select' }" class="home-card card">
         <div class="home-card-left">
-          <div class="home-card-left-title">Custom</div>
+          <div class="home-card-left-title">Overview</div>
           <div class="home-card-left-description">
-            Select what you want to focus on.
+            View all characters and start custom practice sessions.
           </div>
         </div>
         <div class="home-card-right"></div>
       </router-link>
     </div>
+
+    <!-- <p>FAQ</p>
+    <p>How does this work?</p>
+    <p>Why is this the best way to learn Japanese Hiragana?</p>
+    <p>What are Japanese Hiragana?</p>
+    <p>Why would you want to learn Japanese Hiragana?</p> -->
   </div>
 </template>
 
 <script>
-import { characters, alphabets } from '../data'
+import { data, alphabets } from '../data/index'
 import { save, load } from '../util'
 
 export default {
@@ -89,9 +99,8 @@ export default {
     return {
       level: load(lang, 'level') || 0,
       proficiency: load(lang, 'proficiency') || 1,
-      alphabet: characters[lang],
       state: this.$route.query.state,
-      maxLevel: characters[lang].info.levels.length,
+      maxLevel: data[lang].levels.length,
     }
   },
   watch: {
@@ -99,8 +108,7 @@ export default {
       const { lang } = r.params
       this.level = load(lang, 'level') || 0
       this.proficiency = load(lang, 'proficiency') || 1
-      this.alphabet = characters[lang]
-      this.maxLevel = characters[lang].info.levels.length
+      this.maxLevel = data[lang].levels.length
     },
   },
   computed: {
@@ -115,20 +123,15 @@ export default {
   },
   methods: {
     startPractice() {
-      // TODO options, see Learn.vue
-      // const options = this.options.filter((o) => o.value).map((o) => o.id)
-      const options = []
-      const groups = []
-      for (let i = 0; i < this.level + 1; i++) {
-        groups.push(i)
+      if (this.level === 0) {
+        return
       }
       this.$router.push({
         name: 'Practice',
         params: { lang: this.$route.params.lang },
         query: {
           mode: 'practice',
-          opt: options.join(','),
-          grp: groups.join(','),
+          level: this.level,
         },
       })
     },
@@ -153,18 +156,23 @@ export default {
   &-card
     padding: 1rem 2rem
     max-width: 800px
-    background-color: white
     margin: 0 auto
     cursor: pointer
     display: flex
     color: black
     justify-content: space-between
 
+    &.-disabled
+      color: gray
+      background-color: lightgray !important
+      cursor: default
+
     &-wrapper
       margin-bottom: 2rem
       // display: flex
       // width: 100%
       // justify-content: space-around
+
 
     &-left
       margin-right: 2rem
