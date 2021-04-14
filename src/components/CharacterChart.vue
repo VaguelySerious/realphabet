@@ -13,7 +13,7 @@
           <span class="chart-item" v-for="char in row" @click="play(char)">
             <span class="chart-item-char">{{ char }}</span>
             <span v-if="map[char]" class="chart-item-rom">{{
-              map[char].rom
+              map[char].rom || map[char].input
             }}</span>
           </span>
         </div>

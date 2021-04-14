@@ -29,9 +29,9 @@ export const alphabets = [
     slug: 'hiragana',
     lang: 'japanese',
     desc: `Hiragana (ひらがな) is a Japanese syllabary,
-one component of the Japanese writing system, along with katakana, and kanji.
+and one component of the Japanese writing system, next to katakana and kanji.
 It is a phonetic lettering system consisting of 46 primary characters
-(5 vowels, 14 consonants), and is used by 126 million native speakers.
+(combinations of 5 vowels and 10 consonants), and is used by 126 million native speakers.
 `,
   },
   // {
@@ -45,7 +45,7 @@ It is a phonetic lettering system consisting of 46 primary characters
     shortName: 'Devanagari',
     slug: 'devanagari',
     lang: 'hindi',
-    desc: `Devanagari (देवनागरी),
+    desc: `Devanagari (as used by Hindi),
 is an alphasyllabary composed of 44 primary characters (11 vowels, 33 consonants) and is the
 fourth most widely adopted writing system in the world,
 being used for over 120 languages and by roughly 1.7 billion native speakers.

@@ -21,7 +21,7 @@
         <CharacterCard :lang="$route.params.lang" :char="queue[0]" />
       </p>
       <p v-if="state === 'failed'" class="practice-message">
-        Press enter or tap the input to continue
+        Press enter to continue
       </p>
     </div>
 
@@ -93,7 +93,7 @@ export default {
   methods: {
     play() {
       const lang = this.$route.params.lang
-      const char = this.map[this.queue[0]].rom
+      const char = this.queue[0]
       play(lang, char)
     },
     nextItem(failedCurrent = false) {

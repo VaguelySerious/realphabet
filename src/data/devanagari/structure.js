@@ -1,19 +1,25 @@
 export const layout = [
-  ['अ', 'अं', 'अः', 'ॲं'],
-  ['औ', 'आ', 'ओं', 'ऑ'],
-  ['इ', 'ई', 'उ', 'ऊ'],
-  ['ए', 'ऍ', 'ऐ', 'ऋ'],
-  ['क', 'न', 'य', 'म'],
-  ['ह', 'ल', 'र', 'व'],
-  ['ब', 'श', 'ट', 'त'],
-  ['द', 'ध', 'प', 'फ'],
-  ['फ़', 'च', 'छ', 'ज'],
+  ['अ', 'आ', 'ओ', 'औ'],
+  ['इ', 'ई', 'ए', 'ऐ'],
+  ['उ', 'ऊ', 'ऋ'],
+  ['क', 'ख', 'ग', 'घ', 'ङ'],
+  ['च', 'छ', 'ज', 'झ', 'ञ'],
+  ['ट', 'ठ', 'ड', 'ढ', 'ण'],
+  ['त', 'थ', 'द', 'ध', 'न'],
+  ['प', 'फ', 'ब', 'भ', 'म'],
+  ['श', 'ष', 'स', 'ह'],
 ]
 
 export const options = [
   {
     id: 'combinations',
     text: 'Include vowel+consonant combinations',
+    value: false,
+    help: 'https://en.wikipedia.org/wiki/Devanagari#Vowel_diacritics',
+  },
+  {
+    id: 'nasalizedvowels',
+    text: 'Include nasalized vowels',
     value: false,
     help: 'https://en.wikipedia.org/wiki/Devanagari#Vowel_diacritics',
   },

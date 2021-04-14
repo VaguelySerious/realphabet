@@ -1,3 +1,5 @@
+import { data } from './data'
+
 export function shuffle(array) {
   let currentIndex = array.length,
     temporaryValue,
@@ -41,6 +43,8 @@ export function load(lang, key) {
   }
 }
 export function play(lang, char) {
-  const sound = new Audio(`/sounds/${lang}/${char}.mp3`)
+  const charData = data[lang].map[char]
+  const audio = charData.audio || char
+  const sound = new Audio(`/sounds/${lang}/${audio}.mp3`)
   sound.play()
 }

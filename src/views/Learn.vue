@@ -40,15 +40,10 @@
 
     <div class="learn-content">
       <div v-if="level < levels.length" class="learn-explanation">
-        <span v-if="levels[level].info">{{ levels[level].info }}</span>
+        <span v-if="levels[level].info" v-html="levels[level].info"></span>
       </div>
       <div v-else class="notification learn-notification">
-        All done! You can revisit previous levels by using the arrows above.
-      </div>
-
-      <div v-if="level < levels.length">
-        <!-- <p>Hovering over them will play their pronounciation.</p>
-        <p>Once you think you can distinguish between them, take the test!</p> -->
+        All done! You can revisit previous levels by using the navigation above.
       </div>
 
       <div class="learn-show">
@@ -91,7 +86,6 @@ export default {
     const { lang } = this.$route.params
     const { map, layout, levels = [] } = data[lang]
     const currentLevel = +load(lang, 'level') || 0
-    console.log({ currentLevel })
     return {
       currentLevel,
       layout,
@@ -119,6 +113,7 @@ export default {
         query: {
           mode: 'test',
           level: this.level,
+          options: this.levels[this.level].options,
         },
       })
     },

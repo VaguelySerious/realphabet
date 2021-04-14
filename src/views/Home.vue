@@ -46,8 +46,8 @@
           </div>
         </div>
         <div class="home-card-right">
-          <div class="home-card-right-desc">Practice level</div>
-          <div class="home-card-right-num">{{ proficiency }} / 5</div>
+          <!-- <div class="home-card-right-desc">Practice level</div> -->
+          <!-- <div class="home-card-right-num">{{ proficiency }} / 5</div> -->
         </div>
       </div>
     </div>
@@ -131,7 +131,7 @@ export default {
         params: { lang: this.$route.params.lang },
         query: {
           mode: 'practice',
-          level: this.level,
+          level: this.level - 1,
         },
       })
     },

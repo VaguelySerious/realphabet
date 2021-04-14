@@ -5,12 +5,17 @@
         {{ char }}
       </div>
       <div class="ccard-highlight-wrapper">
-        <span class="ccard-highlight">"{{ info.rom }}"</span>
+        <span class="ccard-highlight">
+          {{ (info && (info.rom || info.input)) || '?' }}
+        </span>
+        <span v-if="info.rom !== info.input" class="ccard-highlight">
+          ("{{ (info && info.input) || '?' }}")
+        </span>
       </div>
     </div>
 
     <div class="ccard-explain">
-      <div v-if="info.mem" v-html="info.mem"></div>
+      <div v-if="info && info.mem" v-html="info.mem"></div>
     </div>
   </div>
 </template>
@@ -47,6 +52,10 @@
   &-explain
     // flex: 2 2 auto
     // max-width: 300px
+
+    .-sound
+      color: blue
+      font-weight: bold
 </style>
 
 <script>

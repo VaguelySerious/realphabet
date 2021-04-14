@@ -5,7 +5,7 @@ function zipCombine(consonants, vowels) {
       const v = vowel[1]
       const c = consonant[1]
       acc[char] = {
-        rom: c.rom + v.rom,
+        rom: (c.rom || c.input) + (v.rom || v.input),
         input: c.input + v.input,
         ipa: c.ipa + v.ipa,
         mem: c.mem + ' ' + v.mem,
@@ -23,87 +23,165 @@ function unpack(arr) {
 }
 
 export const hindiPartialVowels = [
-  [
-    '',
-    {
-      input: 'a',
-      rom: 'a',
-      ipa: '',
-      mem: 'The vowel part is the default "a" sound.',
-      partial: true,
-    },
-  ],
+  ['', { input: 'a', mem: '', audio: 'अ' }],
   [
     'ा',
     {
       input: 'aa',
       rom: 'ā',
-      ipa: '',
-      mem: 'A straight line on the back just extends the default "a" sound.',
-      partial: true,
+      mem: `A straight line on the back just extends the default "<span class="-sound">a</span>" sound. Just like
+the additional pillar in आ is a long "<span class="-sound">aa</span>" sound.`,
+      audio: 'आ',
     },
   ],
-  ['ि', { input: 'i', rom: 'i', ipa: '', mem: '', partial: true }],
-  ['ी', { input: 'ii', rom: 'ī', ipa: '', mem: '', partial: true }],
-  ['ु', { input: 'u', rom: 'u', ipa: '', mem: '', partial: true }],
-  ['ू', { input: 'uu', rom: 'ū', ipa: '', mem: '', partial: true }],
-  ['े', { input: 'e', rom: '', ipa: '', mem: '', partial: true }],
-  ['ै', { input: 'ai', rom: '', ipa: '', mem: '', partial: true }],
-  ['ो', { input: 'o', rom: '', ipa: '', mem: '', partial: true }],
-  ['ौ', { input: 'au', rom: '', ipa: '', mem: '', partial: true }],
+  ['ो', { input: 'o', mem: ``, audio: 'ओ' }],
+  ['ौ', { input: 'au', mem: ``, audio: 'औ' }],
+  [
+    'ि',
+    {
+      input: 'i',
+      rom: 'i',
+      mem: `There's a sickle <span class="-sound">i</span>n front of the consonant. This
+is the only vowel combination that puts something <span class="-sound">i</span>n front
+of the character it modifies.`,
+      audio: 'इ',
+    },
+  ],
+  [
+    'ी',
+    {
+      input: 'ii',
+      rom: 'ī',
+      mem: `There's a sickle on the other side. That's <span class="-sound">e</span>asy
+too. What is not <span class="-sound">e</span>asy, is that the hook on top points in the
+opposite direction as in ई, which are the same vowel.`,
+      audio: 'ई',
+    },
+  ],
+  ['ु', { input: 'u', mem: `It also looks similar to उ.`, audio: 'उ' }],
+  ['ू', { input: 'uu', rom: 'ū', mem: ``, audio: 'ऊ' }],
+  ['ृ', { input: 'r', mem: ``, audio: 'ऋ' }],
+  ['े', { input: 'e', mem: ``, audio: 'ए' }],
+  ['ै', { input: 'ai', mem: `Anyone `, audio: 'ऐ' }],
+]
+
+export const hindiVowels = [
+  ['अ', { input: 'a', rom: 'a', mem: '' }],
+  ['आ', { input: 'aa', rom: 'ā', mem: '' }],
+  ['ओ', { input: 'o', rom: 'o', mem: '' }],
+  ['औ', { input: 'au', rom: 'au', mem: '' }],
+
+  ['इ', { input: 'i', rom: 'i', mem: '' }],
+  ['ई', { input: 'ii', rom: 'ī', mem: '' }],
+  ['ए', { input: 'e', rom: 'e', mem: '' }],
+  ['ऐ', { input: 'ai', rom: 'ai', mem: '' }],
+
+  ['उ', { input: 'u', rom: 'u', mem: '' }],
+  ['ऊ', { input: 'uu', rom: 'ū', mem: '' }],
+  ['ऋ', { input: 'r', rom: 'ṛ', mem: '' }],
+
+  // Nasalized vowels
+  ['अँ', { input: 'an', rom: 'aṇ' }],
+  ['आँ', { input: 'aan', rom: 'aaṇ' }],
+  ['ओं', { input: 'on', rom: 'oṇ' }],
+  ['औं', { input: 'aun', rom: 'auṇ' }],
+  ['इँ', { input: 'in', rom: 'iṇ' }],
+  ['ईं', { input: 'iin', rom: 'iiṇ' }],
+  ['एँ', { input: 'en', rom: 'eṇ' }],
+  ['ऐं', { input: 'ain', rom: 'aiṇ' }],
+  ['उँ', { input: 'un', rom: 'uṇ' }],
+  ['ऊँ', { input: 'uun', rom: 'uuṇ' }],
+
+  // ??
+  // ['ऍ', { input: 'e', rom: 'ê' }],
+  // ['ऑ', { input: 'o', rom: 'ô' }],
+  // ['अः', { input: 'ah', rom: 'aḥ' }],
+  // ['ॲं', { input: 'am', rom: 'aṃ' }],
 ]
 
 export const hindiConsonants = [
+  // Gutturals
   [
     'क',
     {
       input: 'k',
-      rom: 'k',
-      ipa: '',
       mem:
         "Looks like a person (the stick) with a parachute on the left side, raising their leg (right side) to do a Karate Kick. It's a karate parachute trooper.",
     },
   ],
-  ['न', { input: 'n', rom: 'n', ipa: '', mem: '' }],
-  ['य', { input: 'y', rom: 'y', ipa: '', mem: '' }],
-  ['म', { input: 'm', rom: 'm', ipa: '', mem: '' }],
-  ['ह', { input: 'h', rom: 'h', ipa: '', mem: '' }],
-  ['ल', { input: 'l', rom: 'l', ipa: '', mem: '' }],
-  ['र', { input: 'r', rom: 'r', ipa: '', mem: '' }],
-  ['व', { input: 'v', rom: 'v', ipa: '', mem: '' }],
-  ['ब', { input: 'b', rom: 'b', ipa: '', mem: '' }],
-  ['श', { input: 'sh', rom: 'sh', ipa: '', mem: '' }],
-  ['ट', { input: 't', rom: 't', ipa: '', mem: '' }],
-  ['त', { input: 't', rom: 't', ipa: '', mem: '' }],
-  ['द', { input: 'd', rom: 'd', ipa: '', mem: '' }],
-  ['ध', { input: 'dh', rom: 'dh', ipa: '', mem: '' }],
-  ['प', { input: 'p', rom: 'p', ipa: '', mem: '' }],
-  ['फ', { input: 'ph', rom: 'ph', ipa: '', mem: '' }],
-  ['फ़', { input: 'f', rom: 'f', ipa: '', mem: '' }],
-  ['च', { input: 'ch', rom: 'ch', ipa: '', mem: '' }],
-  ['छ', { input: 'chh', rom: 'chh', ipa: '', mem: '' }],
-  ['ज', { input: 'j', rom: 'j', ipa: '', mem: '' }],
-]
+  ['ख', { input: 'kh', mem: '' }],
+  ['ग', { input: 'g', mem: '' }],
+  ['घ', { input: 'gh', mem: '' }],
+  ['ङ', { input: 'n', rom: 'ṅ', mem: '' }],
 
-export const hindiVowels = [
-  ['अ', { input: 'a', rom: 'a', ipa: '', mem: '' }],
-  ['आ', { input: 'aa', rom: 'ā', ipa: '', mem: '' }],
-  ['इ', { input: 'i', rom: 'i', ipa: '', mem: '' }],
-  ['ई', { input: 'ii', rom: 'ī', ipa: '', mem: '' }],
-  ['उ', { input: 'u', rom: 'u', ipa: '', mem: '' }],
-  ['ऊ', { input: 'uu', rom: 'ū', ipa: '', mem: '' }],
-  ['ऋ', { input: 'r', rom: 'ṛ', ipa: '', mem: '' }],
-  ['ए', { input: 'e', rom: 'e', ipa: '', mem: '' }],
+  ['च', { input: 'c', mem: '' }],
+  ['छ', { input: 'ch', mem: '' }],
+  ['ज', { input: 'j', mem: '' }],
+  ['झ', { input: 'jh', mem: '' }],
+  ['ञ', { input: 'n', rom: 'ñ', mem: '' }],
 
-  ['ऍ', { input: 'e', rom: 'ê', ipa: '', mem: '' }],
-  ['ऐ', { input: 'ai', rom: 'ai', ipa: '', mem: '' }],
-  ['ओं', { input: 'o', rom: 'o', ipa: '', mem: '' }],
-  ['ऑ', { input: 'o', rom: 'ô', ipa: '', mem: '' }],
+  ['ट', { input: 't', mem: '' }],
+  ['ठ', { input: 'th', mem: '' }],
+  ['ड', { input: 'd', mem: '' }],
+  ['ढ', { input: 'dh', mem: '' }],
+  ['ण', { input: 'n', rom: 'ṇ', mem: '' }],
 
-  ['औ', { input: 'au', rom: 'au', ipa: '', mem: '' }],
-  ['अं', { input: 'an', rom: 'aṇ', ipa: '', mem: '' }],
-  ['अः', { input: 'ah', rom: 'aḥ', ipa: '', mem: '' }],
-  ['ॲं', { input: 'am', rom: 'aṃ', ipa: '', mem: '' }],
+  ['त', { input: 't', mem: '' }],
+  [
+    'थ',
+    {
+      input: 'th',
+      mem: '',
+      note:
+        "This character interrupts the horizontal line spanning a word, but doesn't constitute a word break.",
+    },
+  ],
+  ['द', { input: 'd', mem: '' }],
+  [
+    'ध',
+    {
+      input: 'dh',
+      mem: '',
+      note:
+        "This character interrupts the horizontal line spanning a word, but doesn't constitute a word break.",
+    },
+  ],
+  ['न', { input: 'n', mem: '' }],
+
+  ['प', { input: 'p', mem: '' }],
+  ['फ', { input: 'ph', mem: '' }],
+  ['ब', { input: 'b', mem: '' }],
+  [
+    'भ',
+    {
+      input: 'bh',
+      mem: '',
+      note:
+        "This character interrupts the horizontal line spanning a word, but doesn't constitute a word break.",
+    },
+  ],
+  ['म', { input: 'm', mem: '' }],
+
+  [
+    'श',
+    {
+      input: 'sh',
+      mem: '',
+      note:
+        "This character interrupts the horizontal line spanning a word, but doesn't constitute a word break.",
+    },
+  ],
+  [
+    'ष',
+    {
+      input: 'sh',
+      mem: '',
+      note:
+        'Historically ष sha was pronounced as a retroflex consonant, with the tongue rolled back, but this is very rare these days. The letters श sha and ष sha both sound identical, but there is always only one correct way to spell a word.',
+    },
+  ],
+  ['स', { input: 's', mem: '' }],
+  ['ह', { input: 'h', mem: '' }],
 ]
 
 const ret = {
