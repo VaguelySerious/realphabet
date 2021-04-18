@@ -118,7 +118,6 @@ export default {
   justify-content: space-between
   align-items: center
   background-image: none
-  background-color: white
   border-bottom: 1px solid black
   margin-bottom: 2rem
   padding: 0.5rem 0
@@ -132,7 +131,6 @@ export default {
     padding: 0.2rem
 
     // &:hover
-    //   background-color: gray
     //   cursor: pointer
 
 .app-footer
@@ -151,5 +149,5 @@ export default {
     border-bottom: 2px solid gray
     &:hover
       border-bottom: 2px solid black
-      color: black
+      // color: black
 </style>

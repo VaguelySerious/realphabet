@@ -46,8 +46,8 @@
           </div>
         </div>
         <div class="home-card-right">
-          <!-- <div class="home-card-right-desc">Practice level</div> -->
-          <!-- <div class="home-card-right-num">{{ proficiency }} / 5</div> -->
+          <div class="home-card-right-desc">Practice level</div>
+          <div class="home-card-right-num">{{ proficiency }} / 5</div>
         </div>
       </div>
     </div>
@@ -159,7 +159,6 @@ export default {
     margin: 0 auto
     cursor: pointer
     display: flex
-    color: black
     justify-content: space-between
 
     &.-disabled

@@ -109,68 +109,41 @@ export const hindiConsonants = [
         "Looks like a person (the stick) with a parachute on the left side, raising their leg (right side) to do a Karate Kick. It's a karate parachute trooper.",
     },
   ],
-  ['ख', { input: 'kh', mem: '' }],
-  ['ग', { input: 'g', mem: '' }],
+  ['ख', { input: 'kh', mem: 'king' }],
+  ['ग', { input: 'g', mem: 'go/get' }],
   ['घ', { input: 'gh', mem: '' }],
-  ['ङ', { input: 'n', rom: 'ṅ', mem: '' }],
+  ['ङ', { input: 'n', rom: 'ṅ', mem: 'ink' }],
 
-  ['च', { input: 'c', mem: '' }],
+  ['च', { input: 'c', mem: 'church' }],
   ['छ', { input: 'ch', mem: '' }],
-  ['ज', { input: 'j', mem: '' }],
+  ['ज', { input: 'j', mem: 'jade/jungle' }],
   ['झ', { input: 'jh', mem: '' }],
-  ['ञ', { input: 'n', rom: 'ñ', mem: '' }],
+  ['ञ', { input: 'n', rom: 'ñ', mem: 'inch' }],
 
-  ['ट', { input: 't', mem: '' }],
+  ['ट', { input: 't', mem: '', note: '"ta" with tongue rolled back a little' }],
   ['ठ', { input: 'th', mem: '' }],
   ['ड', { input: 'd', mem: '' }],
   ['ढ', { input: 'dh', mem: '' }],
   ['ण', { input: 'n', rom: 'ṇ', mem: '' }],
 
   ['त', { input: 't', mem: '' }],
-  [
-    'थ',
-    {
-      input: 'th',
-      mem: '',
-      note:
-        "This character interrupts the horizontal line spanning a word, but doesn't constitute a word break.",
-    },
-  ],
+  ['थ', { input: 'th', mem: '' }],
   ['द', { input: 'd', mem: '' }],
-  [
-    'ध',
-    {
-      input: 'dh',
-      mem: '',
-      note:
-        "This character interrupts the horizontal line spanning a word, but doesn't constitute a word break.",
-    },
-  ],
-  ['न', { input: 'n', mem: '' }],
+  ['ध', { input: 'dh', mem: '' }],
+  ['न', { input: 'n', mem: 'nap/net' }],
 
   ['प', { input: 'p', mem: '' }],
   ['फ', { input: 'ph', mem: '' }],
   ['ब', { input: 'b', mem: '' }],
-  [
-    'भ',
-    {
-      input: 'bh',
-      mem: '',
-      note:
-        "This character interrupts the horizontal line spanning a word, but doesn't constitute a word break.",
-    },
-  ],
+  ['भ', { input: 'bh', mem: '' }],
   ['म', { input: 'm', mem: '' }],
 
-  [
-    'श',
-    {
-      input: 'sh',
-      mem: '',
-      note:
-        "This character interrupts the horizontal line spanning a word, but doesn't constitute a word break.",
-    },
-  ],
+  ['य', { input: 'y', mem: '' }],
+  ['र', { input: 'r', mem: '' }],
+  ['ल', { input: 'l', mem: '' }],
+  ['व', { input: 'v', mem: '' }],
+
+  ['श', { input: 'sh', mem: '' }],
   [
     'ष',
     {

@@ -21,8 +21,10 @@
 </template>
 
 <style lang="sass">
+@import '../style'
+
 .ccard
-  background-color: #eee
+  background-color: $color-main
   cursor: pointer
   display: flex
   padding: 1rem 1rem
@@ -54,7 +56,7 @@
     // max-width: 300px
 
     .-sound
-      color: blue
+      color: $color-highlight
       font-weight: bold
 </style>
 

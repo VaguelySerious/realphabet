@@ -43,7 +43,15 @@
         <span v-if="levels[level].info" v-html="levels[level].info"></span>
       </div>
       <div v-else class="notification learn-notification">
-        All done! You can revisit previous levels by using the navigation above.
+        <p>
+          All done! You can revisit previous levels by using the navigation
+          above.
+        </p>
+        <p>
+          The next step in your learning journey is reading practice! Find some
+          text and try to read and pronounce the words. It might be slow at the
+          start, but you'll get a lot faster over time.
+        </p>
       </div>
 
       <div class="learn-show">
@@ -122,6 +130,8 @@ export default {
 </script>
 
 <style lang="sass">
+@import '../style'
+
 .learn
 
   &-levels
@@ -136,8 +146,8 @@ export default {
       text-align: center
       min-width: 40px
       padding: 0.5rem
-      background-color: white
-      color: black
+      background-color: $color-bg
+      color: $color-text
 
       &.-active
         background-color: gray
